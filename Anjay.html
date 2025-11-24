@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <title>Data e-Wallet DANA</title>
+  <style>
+    :root {
+      --light-cyan: #88ffff;
+      --light-cyan-transparent: rgba(136, 255, 255, 0.4);
+      --glow-effect: 0 0 10px rgba(136, 255, 255, 0.5);
+      --pulse-effect: 0 0 15px rgba(136, 255, 255, 0.8);
+    }
+    
+    /* Slow blinking animation only for background borders */
+    @keyframes borderBlink {
+      0%, 100% {
+        border-color: var(--light-cyan-transparent);
+        box-shadow: var(--glow-effect);
+      }
+      50% {
+        border-color: var(--light-cyan);
+        box-shadow: var(--pulse-effect);
+      }
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 18px;
+      background: url('https://i.pinimg.com/736x/79/6e/bc/796ebc1a272806fb2621cb48277f5609.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      font-size: 15px;
+    }
+    
+    /* Efek overlay untuk membuat background lebih terang */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.15);
+      z-index: -1;
+    }
+    
+    /* Main container dengan background lebih transparan */
+    .content-wrapper {
+      background-color: rgba(0, 0, 0, 0.4); /* Lebih transparan */
+      padding: 22px;
+      border-radius: 8px;
+      border: 1px solid var(--light-cyan-transparent);
+      backdrop-filter: blur(12px); /* Blur lebih kuat */
+      animation: borderBlink 3s infinite;
+    }
+    
+    /* Header dengan blinking border */
+    h1 {
+      color: var(--light-cyan);
+      text-align: center;
+      font-size: 24px;
+      margin: 0 0 22px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--light-cyan-transparent);
+      text-shadow: var(--glow-effect);
+      animation: borderBlink 3s infinite;
+    }
+    
+    /* Search elements */
+    .search-container {
+      display: flex;
+      margin-bottom: 22px;
+      gap: 6px;
+    }
+    
+    #searchInput {
+      flex: 1;
+      padding: 11px;
+      font-size: 15px;
+      border: 1px solid var(--light-cyan-transparent);
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      transition: all 0.3s;
+      animation: borderBlink 3s infinite;
+    }
+    
+    #searchButton {
+      padding: 11px 22px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: 1px solid var(--light-cyan-transparent);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s;
+      animation: borderBlink 3s infinite;
+    }
+    
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 14px;
+      margin-bottom: 18px;
+      border: 1px solid var(--light-cyan-transparent);
+    }
+    
+    th, td {
+      border: 1px solid var(--light-cyan-transparent);
+      padding: 10px;
+      text-align: center;
+    }
+    
+    th {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      font-size: 15px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    
+    tr:hover {
+      background-color: rgba(136, 255, 255, 0.15);
+    }
+    
+    /* Message styles */
+    .no-results {
+      text-align: center;
+      color: white;
+      font-style: italic;
+      padding: 18px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      font-size: 14px;
+      border: 1px solid var(--light-cyan-transparent);
+      animation: borderBlink 3s infinite;
+    }
+    
+    .error-message {
+      color: #ff9e9e;
+      text-align: center;
+      margin-top: 18px;
+      font-weight: bold;
+      padding: 12px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      font-size: 14px;
+      border: 1px solid var(--light-cyan-transparent);
+      animation: borderBlink 3s infinite;
+    }
+    
+    /* Datetime container - now combined */
+    .digital-datetime {
+      font-size: 15px;
+      color: var(--light-cyan);
+      font-family: 'Courier New', monospace;
+      padding: 8px 12px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      border: 1px solid var(--light-cyan-transparent);
+      animation: borderBlink 3s infinite;
+      text-align: center;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 22px;
+      color: white;
+      opacity: 0.8;
+      border: 1px dashed var(--light-cyan-transparent);
+      background-color: rgba(0, 0, 0, 0.5);
+      font-size: 15px;
+      animation: borderBlink 3s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-wrapper">
+    <h1>E-Wallet Dana</h1>
+    
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Cari apa boy">
+      <button id="searchButton">Cari</button>
+    </div>
+    
+    <div class="results-container">
+      <div id="loading" class="loading">sabar la boy</div>
+      <div id="resultsTable"></div>
+      <div id="errorMessage" class="error-message"></div>
+      <div id="digitalDatetime" class="digital-datetime"></div>
+    </div>
+  </div>
+
+  <script>
+    // Sample data to replace Google Apps Script data
+    const sampleData = [
+      { gDana: "DANA001", namaDana: "Ahmad Wijaya", nomorDana: "081234567890" },
+      { gDana: "DANA002", namaDana: "Siti Nurhaliza", nomorDana: "082345678901" },
+      { gDana: "DANA003", namaDana: "Budi Santoso", nomorDana: "083456789012" },
+      { gDana: "DANA004", namaDana: "Dewi Lestari", nomorDana: "084567890123" },
+      { gDana: "DANA005", namaDana: "Eko Prasetyo", nomorDana: "085678901234" },
+      { gDana: "DANA006", namaDana: "Fitri Handayani", nomorDana: "086789012345" },
+      { gDana: "DANA007", namaDana: "Gunawan Putra", nomorDana: "087890123456" },
+      { gDana: "DANA008", namaDana: "Hana Permata", nomorDana: "088901234567" },
+      { gDana: "DANA009", namaDana: "Irfan Hakim", nomorDana: "089012345678" },
+      { gDana: "DANA010", namaDana: "Julia Rahmawati", nomorDana: "081234567891" }
+    ];
+
+    // Fungsi untuk memperbarui tanggal dan waktu (gabungan)
+    function updateDateTime() {
+      const now = new Date();
+      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const dayName = days[now.getDay()];
+      const date = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      document.getElementById('digitalDatetime').textContent = 
+        `${dayName}, ${date}-${month}-${year} | ${hours}:${minutes}:${seconds}`;
+    }
+    
+    // Update setiap detik
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadAllData();
+      
+      document.getElementById('searchButton').addEventListener('click', searchData);
+      document.getElementById('searchInput').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') searchData();
+      });
+    });
+
+    function loadAllData() {
+      const loading = document.getElementById('loading');
+      const resultsTable = document.getElementById('resultsTable');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      loading.style.display = 'block';
+      resultsTable.innerHTML = '';
+      errorMessage.textContent = '';
+      
+      // Simulate loading delay
+      setTimeout(function() {
+        loading.style.display = 'none';
+        
+        if (sampleData.length > 0) {
+          let tableHtml = `
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 20%">G Dana</th>
+                  <th style="width: 40%">Nama</th>
+                  <th style="width: 40%">No Rek</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          
+          sampleData.forEach(item => {
+            tableHtml += `
+              <tr>
+                <td>${item.gDana}</td>
+                <td>${item.namaDana}</td>
+                <td>${item.nomorDana}</td>
+              </tr>
+            `;
+          });
+          
+          tableHtml += `
+              </tbody>
+            </table>
+          `;
+          
+          resultsTable.innerHTML = tableHtml;
+        } else {
+          resultsTable.innerHTML = '<div class="no-results">Tidak ada data yang ditemukan</div>';
+        }
+      }, 1000);
+    }
+    
+    function searchData() {
+      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+      const resultsTable = document.getElementById('resultsTable');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      if (!searchTerm) {
+        loadAllData();
+        return;
+      }
+      
+      resultsTable.innerHTML = '<div class="loading">sabar la boy</div>';
+      errorMessage.textContent = '';
+      
+      // Simulate loading delay
+      setTimeout(function() {
+        const filteredData = sampleData.filter(item => 
+          item.gDana.toLowerCase().includes(searchTerm) || 
+          item.namaDana.toLowerCase().includes(searchTerm) || 
+          item.nomorDana.toLowerCase().includes(searchTerm)
+        );
+        
+        if (filteredData.length > 0) {
+          let tableHtml = `
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 20%">G Dana</th>
+                  <th style="width: 40%">Nama</th>
+                  <th style="width: 40%">No Rek</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          
+          filteredData.forEach(item => {
+            tableHtml += `
+              <tr>
+                <td>${item.gDana}</td>
+                <td>${item.namaDana}</td>
+                <td>${item.nomorDana}</td>
+              </tr>
+            `;
+          });
+          
+          tableHtml += `
+              </tbody>
+            </table>
+          `;
+          
+          resultsTable.innerHTML = tableHtml;
+        } else {
+          resultsTable.innerHTML = '<div class="no-results">apa yang kau tempel boy?: "' + searchTerm + '"</div>';
+        }
+      }, 500);
+    }
+  </script>
+</body>
+</html>
