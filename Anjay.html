@@ -9,8 +9,6 @@
       --light-cyan-transparent: rgba(136, 255, 255, 0.4);
       --glow-effect: 0 0 10px rgba(136, 255, 255, 0.5);
       --pulse-effect: 0 0 15px rgba(136, 255, 255, 0.8);
-      --light-blue: #87CEFA; /* Warna biru muda (Light Sky Blue) */
-      --light-blue-transparent: rgba(135, 206, 250, 0.4);
     }
     
     /* Slow blinking animation only for background borders */
@@ -25,11 +23,11 @@
       }
     }
     
-    /* Animasi untuk teks biru blink lambat */
+    /* Animasi untuk teks biru (cyan) blink lambat */
     @keyframes textBlink {
       0%, 100% {
-        color: var(--light-blue);
-        text-shadow: 0 0 5px rgba(135, 206, 250, 0.5);
+        color: var(--light-cyan); /* Menggunakan warna cyan yang sama */
+        text-shadow: 0 0 5px rgba(136, 255, 255, 0.5); /* Efek cahaya cyan */
       }
       50% {
         color: white;
@@ -42,16 +40,14 @@
       max-width: 650px;
       margin: 30px auto;
       padding: 18px;
-      /* Perbaikan untuk background gambar - DIUBAH */
       background: url('https://i.pinimg.com/736x/72/e5/27/72e527f948d31030e224d21f06a9b048.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed; /* Memastikan gambar tetap saat scroll */
+      background-attachment: fixed;
       color: white;
       font-size: 15px;
-      min-height: 100vh; /* Memastikan body memenuhi tinggi viewport */
+      min-height: 100vh;
     }
     
-    /* Efek overlay untuk membuat background lebih terang - disesuaikan */
     body::before {
       content: '';
       position: fixed;
@@ -59,56 +55,53 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(255, 255, 255, 0.05); /* Mengurangi opacity overlay */
+      background: rgba(255, 255, 255, 0.05);
       z-index: -1;
     }
     
-    /* Main container dengan background lebih transparan */
     .content-wrapper {
-      background-color: rgba(0, 0, 0, 0.25); /* Lebih transparan */
+      background-color: rgba(0, 0, 0, 0.25);
       padding: 22px;
       border-radius: 8px;
       border: 1px solid var(--light-cyan-transparent);
-      backdrop-filter: blur(15px); /* Blur lebih kuat */
-      -webkit-backdrop-filter: blur(15px); /* Untuk browser WebKit */
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       animation: borderBlink 3s infinite;
     }
     
-    /* Header dengan blinking border dan teks biru blink */
+    /* Header dengan blinking border dan teks cyan blink */
     h1 {
-      color: var(--light-blue); /* Menggunakan warna biru muda */
+      color: var(--light-cyan); /* Warna cyan yang sama */
       text-align: center;
       font-size: 24px;
       margin: 0 0 22px 0;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--light-cyan-transparent);
-      text-shadow: 0 0 5px rgba(135, 206, 250, 0.5);
-      animation: borderBlink 3s infinite, textBlink 4s infinite; /* Tambahkan animasi teks blink */
+      text-shadow: 0 0 5px rgba(136, 255, 255, 0.5);
+      animation: borderBlink 3s infinite, textBlink 4s infinite;
     }
     
-    /* Search elements - Updated */
     .search-container {
       margin-bottom: 22px;
     }
     
     .search-box {
       width: 100%;
-      padding: 11px 15px; /* Adjusted padding without icon */
+      padding: 11px 15px;
       font-size: 15px;
       border: 1px solid var(--light-cyan-transparent);
-      border-radius: 25px; /* More rounded corners */
-      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
+      border-radius: 25px;
+      background-color: rgba(0, 0, 0, 0.3);
       color: white;
       transition: all 0.3s;
       animation: borderBlink 3s infinite;
       box-sizing: border-box;
-      text-align: center; /* Tambahkan baris ini */
+      text-align: center;
     }
 
-    /* Tambahkan CSS ini untuk membuat placeholder juga di tengah */
     .search-box::placeholder {
       text-align: center;
-      color: var(--light-blue); /* Placeholder dengan warna biru muda */
+      color: var(--light-cyan); /* Placeholder dengan warna cyan */
     }
     
     .search-box:focus {
@@ -117,7 +110,6 @@
       box-shadow: var(--pulse-effect);
     }
     
-    /* Table styling - SEMUA GARIS DIHAPUS */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -125,21 +117,18 @@
       color: white;
       font-size: 14px;
       margin-bottom: 18px;
-      /* Border luar tabel dihapus */
     }
     
     th, td {
       padding: 10px;
       text-align: center;
-      /* Border sel dihapus */
     }
     
     th {
       background-color: rgba(0, 0, 0, 0.4);
-      color: var(--light-blue); /* Header dengan warna biru muda */
+      color: var(--light-cyan); /* Header dengan warna cyan */
       font-size: 15px;
-      /* Border bawah header dihapus */
-      animation: textBlink 4s infinite; /* Tambahkan animasi teks blink */
+      animation: textBlink 4s infinite;
     }
     
     tr:nth-child(even) {
@@ -149,45 +138,41 @@
     tr:hover {
       background-color: rgba(136, 255, 255, 0.15);
     }
-
-    /* Style untuk tr dan tr:last-child yang menambahkan garis sudah dihapus sepenuhnya */
     
-    /* Message styles */
     .no-results {
       text-align: center;
-      color: var(--light-blue); /* Pesan dengan warna biru muda */
+      color: var(--light-cyan); /* Pesan dengan warna cyan */
       font-style: italic;
       padding: 18px;
-      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
+      background-color: rgba(0, 0, 0, 0.3);
       border-radius: 5px;
       font-size: 14px;
       border: 1px solid var(--light-cyan-transparent);
-      animation: borderBlink 3s infinite, textBlink 4s infinite; /* Tambahkan animasi teks blink */
+      animation: borderBlink 3s infinite, textBlink 4s infinite;
     }
     
     .error-message {
-      color: var(--light-blue); /* Pesan error dengan warna biru muda */
+      color: var(--light-cyan); /* Pesan error dengan warna cyan */
       text-align: center;
       margin-top: 18px;
       font-weight: bold;
       padding: 12px;
-      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
+      background-color: rgba(0, 0, 0, 0.3);
       border-radius: 5px;
       font-size: 14px;
       border: 1px solid var(--light-cyan-transparent);
-      animation: borderBlink 3s infinite, textBlink 4s infinite; /* Tambahkan animasi teks blink */
+      animation: borderBlink 3s infinite, textBlink 4s infinite;
     }
     
-    /* Datetime container - now combined */
     .digital-datetime {
       font-size: 15px;
-      color: var(--light-blue); /* Tanggal dan waktu dengan warna biru muda */
+      color: var(--light-cyan); /* Tanggal dan waktu dengan warna cyan */
       font-family: 'Courier New', monospace;
       padding: 8px 12px;
-      background-color: rgba(0, 0, 0, 0.2); /* Lebih transparan */
+      background-color: rgba(0, 0, 0, 0.2);
       border-radius: 4px;
       border: 1px solid var(--light-cyan-transparent);
-      animation: borderBlink 3s infinite, textBlink 4s infinite; /* Tambahkan animasi teks blink */
+      animation: borderBlink 3s infinite, textBlink 4s infinite;
       text-align: center;
       margin-top: 12px;
       letter-spacing: 1px;
@@ -196,12 +181,12 @@
     .loading {
       text-align: center;
       padding: 22px;
-      color: var(--light-blue); /* Pesan loading dengan warna biru muda */
+      color: var(--light-cyan); /* Pesan loading dengan warna cyan */
       opacity: 0.8;
       border: 1px dashed var(--light-cyan-transparent);
-      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
+      background-color: rgba(0, 0, 0, 0.3);
       font-size: 15px;
-      animation: borderBlink 3s infinite, textBlink 4s infinite; /* Tambahkan animasi teks blink */
+      animation: borderBlink 3s infinite, textBlink 4s infinite;
     }
   </style>
 </head>
