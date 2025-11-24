@@ -59,6 +59,30 @@
       z-index: -1;
     }
     
+    /* Container untuk judul dan pencarian */
+    .header-container {
+      background-color: rgba(0, 0, 0, 0.25);
+      padding: 22px;
+      border-radius: 8px;
+      border: 1px solid var(--light-cyan-transparent);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      animation: borderBlink 3s infinite;
+      margin-bottom: 20px; /* Jarak ke konten di bawahnya */
+      text-align: center;
+    }
+    
+    /* Header dengan blinking border dan teks cyan blink */
+    h1 {
+      color: var(--light-cyan); /* Warna cyan yang sama */
+      text-align: center;
+      font-size: 24px;
+      margin: 0 0 22px 0; /* Margin bawah untuk jarak dengan search box */
+      text-shadow: 0 0 5px rgba(136, 255, 255, 0.5);
+      animation: textBlink 4s infinite;
+    }
+    
+    /* Container untuk konten utama (tabel) */
     .content-wrapper {
       background-color: rgba(0, 0, 0, 0.25);
       padding: 22px;
@@ -69,20 +93,8 @@
       animation: borderBlink 3s infinite;
     }
     
-    /* Header dengan blinking border dan teks cyan blink */
-    h1 {
-      color: var(--light-cyan); /* Warna cyan yang sama */
-      text-align: center;
-      font-size: 24px;
-      margin: 0 0 22px 0;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--light-cyan-transparent);
-      text-shadow: 0 0 5px rgba(136, 255, 255, 0.5);
-      animation: borderBlink 3s infinite, textBlink 4s infinite;
-    }
-    
     .search-container {
-      margin-bottom: 22px;
+      /* Margin bawah dihapus karena sudah diatur oleh container */
     }
     
     .search-box {
@@ -191,13 +203,16 @@
   </style>
 </head>
 <body>
-  <div class="content-wrapper">
+  <!-- Container untuk Judul dan Pencarian -->
+  <div class="header-container">
     <h1>E-Wallet Dana</h1>
-    
     <div class="search-container">
       <input type="text" id="searchInput" class="search-box" placeholder="Cari apa boy">
     </div>
-    
+  </div>
+  
+  <!-- Container untuk konten utama (tabel data) -->
+  <div class="content-wrapper">
     <div class="results-container">
       <div id="loading" class="loading">sabar la boy</div>
       <div id="resultsTable"></div>
