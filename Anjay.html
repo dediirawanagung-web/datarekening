@@ -35,34 +35,6 @@
       }
     }
     
-    /* DITAMBAHKAN: Animasi untuk efek mengambang */
-    @keyframes float {
-      0% {
-        transform: translateY(0px);
-        text-shadow: 0 5px 10px rgba(136, 255, 255, 0.3);
-      }
-      50% {
-        transform: translateY(-5px);
-        text-shadow: 0 10px 20px rgba(136, 255, 255, 0.5);
-      }
-      100% {
-        transform: translateY(0px);
-        text-shadow: 0 5px 10px rgba(136, 255, 255, 0.3);
-      }
-    }
-    
-    /* DITAMBAHKAN: Animasi untuk efek mengambang saat hover */
-    @keyframes floatHover {
-      0% {
-        transform: translateY(0px) scale(1.02);
-        text-shadow: 0 10px 20px rgba(136, 255, 255, 0.6);
-      }
-      100% {
-        transform: translateY(-8px) scale(1.02);
-        text-shadow: 0 15px 30px rgba(136, 255, 255, 0.8);
-      }
-    }
-    
     body {
       font-family: Arial, sans-serif;
       max-width: 650px;
@@ -166,27 +138,12 @@
       text-align: center;
       border: none; /* Garis dihapus */
       background-color: transparent; /* Membuat sel transparan agar menampilkan warna tabel */
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    
-    /* DITAMBAHKAN: Efek mengambang untuk sel data */
-    td {
-      animation: float 4s ease-in-out infinite;
-      animation-delay: calc(var(--row-index) * 0.2s);
-    }
-    
-    /* DITAMBAHKAN: Efek hover untuk sel data */
-    td:hover {
-      animation: floatHover 0.5s ease-in-out forwards;
-      cursor: pointer;
     }
     
     th {
       color: var(--light-cyan); /* Header dengan warna cyan */
       font-size: 15px;
       font-weight: bold;
-      animation: float 3s ease-in-out infinite;
     }
     
     /* Efek baris tetap dihapus untuk seragam */
@@ -208,20 +165,17 @@
         font-size: 15px;
         margin-top: 12px;
         letter-spacing: 1px;
-        animation: float 3s ease-in-out infinite; /* DITAMBAHKAN: Animasi mengambang untuk jam */
     }
 
     .loading {
         font-style: italic;
         opacity: 0.8;
         border-bottom: 1px dashed var(--light-cyan-transparent); /* Garis bawah untuk penekanan */
-        animation: float 2s ease-in-out infinite; /* DITAMBAHKAN: Animasi mengambang untuk loading */
     }
 
     .error-message {
         font-weight: bold;
         margin-top: 18px;
-        animation: float 3s ease-in-out infinite; /* DITAMBAHKAN: Animasi mengambang untuk pesan error */
     }
 
   </style>
@@ -342,25 +296,19 @@
       table.appendChild(headerRow);
       
       // Tambahkan data
-      data.forEach((item, index) => {
+      data.forEach(item => {
         const row = document.createElement('tr');
-        
-        // DITAMBAHKAN: Set CSS variable untuk animasi bertahap
-        row.style.setProperty('--row-index', index);
         
         const gDanaCell = document.createElement('td');
         gDanaCell.textContent = item.gDana;
-        gDanaCell.style.setProperty('--row-index', index);
         row.appendChild(gDanaCell);
         
         const namaCell = document.createElement('td');
         namaCell.textContent = item.namaDana;
-        namaCell.style.setProperty('--row-index', index);
         row.appendChild(namaCell);
         
         const nomorCell = document.createElement('td');
         nomorCell.textContent = item.nomorDana;
-        nomorCell.style.setProperty('--row-index', index);
         row.appendChild(nomorCell);
         
         table.appendChild(row);
