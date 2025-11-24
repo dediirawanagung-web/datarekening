@@ -68,35 +68,39 @@
       animation: borderBlink 3s infinite;
     }
     
-    /* Search elements */
+    /* Search elements - Updated */
     .search-container {
-      display: flex;
+      position: relative;
       margin-bottom: 22px;
-      gap: 6px;
     }
     
-    #searchInput {
-      flex: 1;
-      padding: 11px;
+    .search-box {
+      width: 100%;
+      padding: 11px 45px 11px 15px; /* Adjusted padding for icon */
       font-size: 15px;
       border: 1px solid var(--light-cyan-transparent);
-      border-radius: 4px;
+      border-radius: 25px; /* More rounded corners */
       background-color: rgba(0, 0, 0, 0.5);
       color: white;
       transition: all 0.3s;
       animation: borderBlink 3s infinite;
+      box-sizing: border-box;
     }
     
-    #searchButton {
-      padding: 11px 22px;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      border: 1px solid var(--light-cyan-transparent);
-      border-radius: 4px;
+    .search-box:focus {
+      outline: none;
+      border-color: var(--light-cyan);
+      box-shadow: var(--pulse-effect);
+    }
+    
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--light-cyan);
       cursor: pointer;
-      font-size: 15px;
-      transition: all 0.3s;
-      animation: borderBlink 3s infinite;
+      font-size: 18px;
     }
     
     /* Table styling */
@@ -188,8 +192,8 @@
     <h1>E-Wallet Dana</h1>
     
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Cari apa boy">
-      <button id="searchButton">Cari</button>
+      <input type="text" id="searchInput" class="search-box" placeholder="Cari apa boy">
+      <span id="searchIcon" class="search-icon">🔍</span>
     </div>
     
     <div class="results-container">
@@ -342,11 +346,18 @@
       document.getElementById('digitalDatetime').textContent = dateTimeString;
     }
     
-    // Event listener untuk tombol pencarian
-    document.getElementById('searchButton').addEventListener('click', searchData);
+    // Event listener untuk ikon pencarian
+    document.getElementById('searchIcon').addEventListener('click', searchData);
     
     // Event listener untuk input pencarian (real-time search)
     document.getElementById('searchInput').addEventListener('input', searchData);
+    
+    // Event listener untuk tombol Enter
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchData();
+      }
+    });
     
     // Panggil fungsi untuk mengambil data saat halaman dimuat
     window.addEventListener('load', fetchDanaData);
