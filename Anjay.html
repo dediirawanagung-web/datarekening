@@ -43,7 +43,7 @@
       background: url('https://i.pinimg.com/736x/72/e5/27/72e527f948d31030e224d21f06a9b048.jpg') no-repeat center center fixed;
       background-size: cover;
       background-attachment: fixed;
-      color: white;
+      color: var(--light-cyan); /* DIUBAH: Warna teks default menjadi cyan */
       font-size: 15px;
       min-height: 100vh;
     }
@@ -104,9 +104,9 @@
       border: 1px solid var(--light-cyan-transparent);
       border-radius: 25px;
       background-color: rgba(0, 0, 0, 0.3);
-      color: white;
+      color: var(--light-cyan); /* DIUBAH: Warna teks di kotak pencarian menjadi cyan */
       transition: all 0.3s;
-      animation: borderBlink 3s infinite;
+      animation: borderBlink 3s infinite, textBlink 4s infinite; /* DITAMBAHKAN: Animasi teks berkedip */
       box-sizing: border-box;
       text-align: center;
       margin: 0 auto; /* Menambahkan margin auto untuk menengahkan secara horizontal */
@@ -127,9 +127,10 @@
     table {
       width: 100%; /* Membuat tabel memenuhi lebar kontainer */
       border-collapse: collapse;
-      color: white;
+      color: inherit; /* Akan mewarisi warna dari body (cyan) */
       font-size: 14px;
       margin-bottom: 18px;
+      animation: textBlink 4s infinite; /* DITAMBAHKAN: Animasi teks berkedip */
     }
     
     th, td {
@@ -156,7 +157,7 @@
       border-radius: 0; /* Sudut dibuat seragam dengan kontainer */
       border: none; /* Garis tepi dihapus */
       font-size: 14px;
-      /* Animasi border dan text blink dihapus karena sudah tidak relevan */
+      animation: textBlink 4s infinite; /* DITAMBAHKAN: Animasi teks berkedip */
     }
 
     .digital-datetime {
