@@ -9,6 +9,8 @@
       --light-cyan-transparent: rgba(136, 255, 255, 0.4);
       --glow-effect: 0 0 10px rgba(136, 255, 255, 0.5);
       --pulse-effect: 0 0 15px rgba(136, 255, 255, 0.8);
+      --text-glow: 0 0 5px rgba(136, 255, 255, 0.8), 0 0 10px rgba(136, 255, 255, 0.6), 0 0 15px rgba(136, 255, 255, 0.4);
+      --text-bright-glow: 0 0 10px rgba(136, 255, 255, 1), 0 0 20px rgba(136, 255, 255, 0.8), 0 0 30px rgba(136, 255, 255, 0.6);
     }
     
     /* Slow blinking animation only for background borders */
@@ -27,16 +29,40 @@
     @keyframes textBlink {
       0%, 100% {
         color: var(--light-cyan); /* Menggunakan warna cyan yang sama */
-        text-shadow: 0 0 5px rgba(136, 255, 255, 0.5); /* Efek cahaya cyan */
+        text-shadow: var(--text-glow); /* Efek cahaya cyan yang lebih ditingkatkan */
       }
       50% {
         color: white;
+        text-shadow: var(--text-bright-glow); /* Efek cahaya yang lebih terang */
+      }
+    }
+    
+    /* Animasi teks berkedip lebih cepat untuk elemen interaktif */
+    @keyframes textBlinkFast {
+      0%, 100% {
+        color: var(--light-cyan);
+        text-shadow: var(--text-glow);
+      }
+      50% {
+        color: white;
+        text-shadow: var(--text-bright-glow);
+      }
+    }
+    
+    /* Animasi teks muncul dengan efek fade-in */
+    @keyframes fadeInGlow {
+      0% {
+        opacity: 0;
         text-shadow: none;
+      }
+      100% {
+        opacity: 1;
+        text-shadow: var(--text-glow);
       }
     }
     
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font yang lebih modern */
       max-width: 650px;
       margin: 30px auto;
       padding: 18px;
@@ -76,10 +102,12 @@
     h1 {
       color: var(--light-cyan); /* Warna cyan yang sama */
       text-align: center;
-      font-size: 24px;
+      font-size: 28px; /* Ukuran font diperbesar */
       margin: 0 0 22px 0; /* Margin bawah untuk jarak dengan search box */
-      text-shadow: 0 0 5px rgba(136, 255, 255, 0.5);
-      animation: textBlink 4s infinite;
+      text-shadow: var(--text-glow); /* Efek cahaya yang lebih ditingkatkan */
+      animation: textBlink 3s infinite; /* Animasi lebih cepat */
+      font-weight: 600; /* Font weight lebih tebal */
+      letter-spacing: 1px; /* Jarak antar huruf */
     }
     
     /* Container untuk konten utama (tabel) - TRANSPARANSI DITINGKATKAN LAGI */
@@ -99,28 +127,31 @@
     
     .search-box {
       width: 85%; /* Mengurangi lebar menjadi 85% */
-      padding: 8px 12px; /* Mengurangi padding untuk membuatnya lebih kecil */
-      font-size: 15px;
+      padding: 10px 15px; /* Padding sedikit diperbesar */
+      font-size: 16px; /* Ukuran font diperbesar */
       border: 1px solid var(--light-cyan-transparent);
       border-radius: 25px;
       background-color: rgba(0, 0, 0, 0.3);
       color: var(--light-cyan); /* DIUBAH: Warna teks di kotak pencarian menjadi cyan */
       transition: all 0.3s;
-      animation: borderBlink 3s infinite, textBlink 4s infinite; /* DITAMBAHKAN: Animasi teks berkedip */
+      animation: textBlinkFast 2s infinite; /* Animasi lebih cepat untuk elemen interaktif */
       box-sizing: border-box;
       text-align: center;
       margin: 0 auto; /* Menambahkan margin auto untuk menengahkan secara horizontal */
+      font-weight: 500; /* Font weight sedikit lebih tebal */
     }
 
     .search-box::placeholder {
       text-align: center;
       color: var(--light-cyan); /* Placeholder dengan warna cyan */
+      opacity: 0.8; /* Opacity sedikit dikurangi */
     }
     
     .search-box:focus {
       outline: none;
       border-color: var(--light-cyan);
       box-shadow: var(--pulse-effect);
+      animation: none; /* Hentikan animasi saat fokus */
     }
     
     /* Style untuk tabel - DIUBAH MENYESUAIKAN KONTAINER */
@@ -128,9 +159,9 @@
       width: 100%; /* Lebar default, akan diubah oleh JavaScript */
       border-collapse: collapse;
       color: inherit; /* Akan mewarisi warna dari body (cyan) */
-      font-size: 14px;
+      font-size: 15px; /* Ukuran font diperbesar */
       margin-bottom: 18px;
-      animation: textBlink 4s infinite; /* DITAMBAHKAN: Animasi teks berkedip */
+      animation: fadeInGlow 1s ease-in-out; /* Animasi fade in saat muncul */
     }
     
     th, td {
@@ -138,12 +169,14 @@
       text-align: center;
       border: none; /* Garis dihapus */
       background-color: transparent; /* Membuat sel transparan agar menampilkan warna tabel */
+      text-shadow: var(--text-glow); /* Efek cahaya pada semua teks tabel */
     }
     
     th {
       color: var(--light-cyan); /* Header dengan warna cyan */
-      font-size: 15px;
-      font-weight: bold;
+      font-size: 16px; /* Ukuran font header diperbesar */
+      font-weight: 600; /* Font weight lebih tebal */
+      letter-spacing: 0.5px; /* Jarak antar huruf */
     }
     
     /* Efek baris tetap dihapus untuk seragam */
@@ -156,26 +189,30 @@
       background-color: transparent; /* Latar dibuat transparan */
       border-radius: 0; /* Sudut dibuat seragam dengan kontainer */
       border: none; /* Garis tepi dihapus */
-      font-size: 14px;
-      animation: textBlink 4s infinite; /* DITAMBAHKAN: Animasi teks berkedip */
+      font-size: 15px; /* Ukuran font diperbesar */
+      animation: fadeInGlow 1s ease-in-out; /* Animasi fade in */
+      text-shadow: var(--text-glow); /* Efek cahaya */
     }
 
     .digital-datetime {
         font-family: 'Courier New', monospace;
-        font-size: 15px;
+        font-size: 16px; /* Ukuran font diperbesar */
         margin-top: 12px;
         letter-spacing: 1px;
+        font-weight: 500; /* Font weight sedikit lebih tebal */
     }
 
     .loading {
         font-style: italic;
         opacity: 0.8;
         border-bottom: 1px dashed var(--light-cyan-transparent); /* Garis bawah untuk penekanan */
+        animation: textBlinkFast 1.5s infinite; /* Animasi lebih cepat */
     }
 
     .error-message {
         font-weight: bold;
         margin-top: 18px;
+        animation: textBlinkFast 1s infinite; /* Animasi lebih cepat untuk pesan error */
     }
 
   </style>
