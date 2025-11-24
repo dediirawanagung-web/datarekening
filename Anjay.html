@@ -70,13 +70,12 @@
     
     /* Search elements - Updated */
     .search-container {
-      position: relative;
       margin-bottom: 22px;
     }
     
     .search-box {
       width: 100%;
-      padding: 11px 45px 11px 15px; /* Adjusted padding for icon */
+      padding: 11px 15px; /* Adjusted padding without icon */
       font-size: 15px;
       border: 1px solid var(--light-cyan-transparent);
       border-radius: 25px; /* More rounded corners */
@@ -91,16 +90,6 @@
       outline: none;
       border-color: var(--light-cyan);
       box-shadow: var(--pulse-effect);
-    }
-    
-    .search-icon {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--light-cyan);
-      cursor: pointer;
-      font-size: 18px;
     }
     
     /* Table styling */
@@ -193,7 +182,6 @@
     
     <div class="search-container">
       <input type="text" id="searchInput" class="search-box" placeholder="Cari apa boy">
-      <span id="searchIcon" class="search-icon">🔍</span>
     </div>
     
     <div class="results-container">
@@ -345,9 +333,6 @@
       const dateTimeString = now.toLocaleDateString('id-ID', options);
       document.getElementById('digitalDatetime').textContent = dateTimeString;
     }
-    
-    // Event listener untuk ikon pencarian
-    document.getElementById('searchIcon').addEventListener('click', searchData);
     
     // Event listener untuk input pencarian (real-time search)
     document.getElementById('searchInput').addEventListener('input', searchData);
