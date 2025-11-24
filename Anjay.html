@@ -28,13 +28,16 @@
       max-width: 650px;
       margin: 30px auto;
       padding: 18px;
+      /* Perbaikan untuk background gambar */
       background: url('https://i.pinimg.com/736x/79/6e/bc/796ebc1a272806fb2621cb48277f5609.jpg') no-repeat center center fixed;
       background-size: cover;
+      background-attachment: fixed; /* Memastikan gambar tetap saat scroll */
       color: white;
       font-size: 15px;
+      min-height: 100vh; /* Memastikan body memenuhi tinggi viewport */
     }
     
-    /* Efek overlay untuk membuat background lebih terang */
+    /* Efek overlay untuk membuat background lebih terang - disesuaikan */
     body::before {
       content: '';
       position: fixed;
@@ -42,17 +45,18 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05); /* Mengurangi opacity overlay */
       z-index: -1;
     }
     
     /* Main container dengan background lebih transparan */
     .content-wrapper {
-      background-color: rgba(0, 0, 0, 0.4); /* Lebih transparan */
+      background-color: rgba(0, 0, 0, 0.25); /* Lebih transparan */
       padding: 22px;
       border-radius: 8px;
       border: 1px solid var(--light-cyan-transparent);
-      backdrop-filter: blur(12px); /* Blur lebih kuat */
+      backdrop-filter: blur(15px); /* Blur lebih kuat */
+      -webkit-backdrop-filter: blur(15px); /* Untuk browser WebKit */
       animation: borderBlink 3s infinite;
     }
     
@@ -79,7 +83,7 @@
       font-size: 15px;
       border: 1px solid var(--light-cyan-transparent);
       border-radius: 25px; /* More rounded corners */
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
       color: white;
       transition: all 0.3s;
       animation: borderBlink 3s infinite;
@@ -102,7 +106,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
       color: white;
       font-size: 14px;
       margin-bottom: 18px;
@@ -116,13 +120,13 @@
     }
     
     th {
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.4); /* Lebih transparan */
       color: white;
       font-size: 15px;
     }
     
     tr:nth-child(even) {
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: rgba(0, 0, 0, 0.2); /* Lebih transparan */
     }
     
     tr:hover {
@@ -135,7 +139,7 @@
       color: white;
       font-style: italic;
       padding: 18px;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
       border-radius: 5px;
       font-size: 14px;
       border: 1px solid var(--light-cyan-transparent);
@@ -148,7 +152,7 @@
       margin-top: 18px;
       font-weight: bold;
       padding: 12px;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
       border-radius: 5px;
       font-size: 14px;
       border: 1px solid var(--light-cyan-transparent);
@@ -161,7 +165,7 @@
       color: var(--light-cyan);
       font-family: 'Courier New', monospace;
       padding: 8px 12px;
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: rgba(0, 0, 0, 0.2); /* Lebih transparan */
       border-radius: 4px;
       border: 1px solid var(--light-cyan-transparent);
       animation: borderBlink 3s infinite;
@@ -176,7 +180,7 @@
       color: white;
       opacity: 0.8;
       border: 1px dashed var(--light-cyan-transparent);
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3); /* Lebih transparan */
       font-size: 15px;
       animation: borderBlink 3s infinite;
     }
