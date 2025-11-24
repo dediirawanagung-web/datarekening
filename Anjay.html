@@ -125,7 +125,7 @@
     
     /* Style untuk tabel - DIUBAH MENYESUAIKAN KONTAINER */
     table {
-      width: 100%; /* Membuat tabel memenuhi lebar kontainer */
+      width: 100%; /* Lebar default, akan diubah oleh JavaScript */
       border-collapse: collapse;
       color: inherit; /* Akan mewarisi warna dari body (cyan) */
       font-size: 14px;
@@ -236,8 +236,8 @@
           };
         });
         
-        // Tampilkan data pertama kali
-        displayData(danaData);
+        // Tampilkan data pertama kali (tanpa pencarian)
+        displayData(danaData, '');
         
         // Update waktu
         updateDateTime();
@@ -256,7 +256,7 @@
     }
     
     // Fungsi untuk menampilkan data dalam tabel
-    function displayData(data) {
+    function displayData(data, searchTerm) {
       const resultsTable = document.getElementById('resultsTable');
       const errorMessage = document.getElementById('errorMessage');
       
@@ -271,6 +271,17 @@
       
       // Buat tabel
       const table = document.createElement('table');
+      
+      // PERUBAHAN: Atur lebar tabel berdasarkan status pencarian
+      if (searchTerm && searchTerm.trim() !== '') {
+        // Jika sedang ada pencarian, buat tabel lebih kecil dan di tengah
+        table.style.width = '85%';
+        table.style.margin = '0 auto';
+      } else {
+        // Jika tidak ada pencarian (tampilan awal), buat tabel penuh
+        table.style.width = '100%';
+        table.style.margin = '0';
+      }
       
       // Buat header
       const headerRow = document.createElement('tr');
@@ -311,7 +322,7 @@
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       
       if (!searchTerm) {
-        displayData(danaData);
+        displayData(danaData, '');
         return;
       }
       
@@ -321,7 +332,8 @@
         item.nomorDana.toLowerCase().includes(searchTerm)
       );
       
-      displayData(filteredData);
+      // PERUBAHAN: Kirim searchTerm ke displayData
+      displayData(filteredData, searchTerm);
     }
     
     // Fungsi untuk update tanggal dan waktu
