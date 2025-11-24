@@ -201,152 +201,557 @@
   </div>
 
   <script>
-    // Sample data to replace Google Apps Script data
-    const sampleData = [
-      { gDana: "DANA001", namaDana: "Ahmad Wijaya", nomorDana: "081234567890" },
-      { gDana: "DANA002", namaDana: "Siti Nurhaliza", nomorDana: "082345678901" },
-      { gDana: "DANA003", namaDana: "Budi Santoso", nomorDana: "083456789012" },
-      { gDana: "DANA004", namaDana: "Dewi Lestari", nomorDana: "084567890123" },
-      { gDana: "DANA005", namaDana: "Eko Prasetyo", nomorDana: "085678901234" },
-      { gDana: "DANA006", namaDana: "Fitri Handayani", nomorDana: "086789012345" },
-      { gDana: "DANA007", namaDana: "Gunawan Putra", nomorDana: "087890123456" },
-      { gDana: "DANA008", namaDana: "Hana Permata", nomorDana: "088901234567" },
-      { gDana: "DANA009", namaDana: "Irfan Hakim", nomorDana: "089012345678" },
-      { gDana: "DANA010", namaDana: "Julia Rahmawati", nomorDana: "081234567891" }
-    ];
-
-    // Fungsi untuk memperbarui tanggal dan waktu (gabungan)
-    function updateDateTime() {
-      const now = new Date();
-      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-      const dayName = days[now.getDay()];
-      const date = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const year = now.getFullYear();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      
-      document.getElementById('digitalDatetime').textContent = 
-        `${dayName}, ${date}-${month}-${year} | ${hours}:${minutes}:${seconds}`;
-    }
-    
-    // Update setiap detik
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-
-    document.addEventListener('DOMContentLoaded', function() {
-      loadAllData();
-      
-      document.getElementById('searchButton').addEventListener('click', searchData);
-      document.getElementById('searchInput').addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') searchData();
-      });
-    });
-
-    function loadAllData() {
-      const loading = document.getElementById('loading');
-      const resultsTable = document.getElementById('resultsTable');
-      const errorMessage = document.getElementById('errorMessage');
-      
-      loading.style.display = 'block';
-      resultsTable.innerHTML = '';
-      errorMessage.textContent = '';
-      
-      // Simulate loading delay
-      setTimeout(function() {
-        loading.style.display = 'none';
-        
-        if (sampleData.length > 0) {
-          let tableHtml = `
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 20%">G Dana</th>
-                  <th style="width: 40%">Nama</th>
-                  <th style="width: 40%">No Rek</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          
-          sampleData.forEach(item => {
-            tableHtml += `
-              <tr>
-                <td>${item.gDana}</td>
-                <td>${item.namaDana}</td>
-                <td>${item.nomorDana}</td>
-              </tr>
-            `;
-          });
-          
-          tableHtml += `
-              </tbody>
-            </table>
-          `;
-          
-          resultsTable.innerHTML = tableHtml;
-        } else {
-          resultsTable.innerHTML = '<div class="no-results">Tidak ada data yang ditemukan</div>';
-        }
-      }, 1000);
-    }
-    
-    function searchData() {
-      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-      const resultsTable = document.getElementById('resultsTable');
-      const errorMessage = document.getElementById('errorMessage');
-      
-      if (!searchTerm) {
-        loadAllData();
-        return;
-      }
-      
-      resultsTable.innerHTML = '<div class="loading">sabar la boy</div>';
-      errorMessage.textContent = '';
-      
-      // Simulate loading delay
-      setTimeout(function() {
-        const filteredData = sampleData.filter(item => 
-          item.gDana.toLowerCase().includes(searchTerm) || 
-          item.namaDana.toLowerCase().includes(searchTerm) || 
-          item.nomorDana.toLowerCase().includes(searchTerm)
-        );
-        
-        if (filteredData.length > 0) {
-          let tableHtml = `
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 20%">G Dana</th>
-                  <th style="width: 40%">Nama</th>
-                  <th style="width: 40%">No Rek</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          
-          filteredData.forEach(item => {
-            tableHtml += `
-              <tr>
-                <td>${item.gDana}</td>
-                <td>${item.namaDana}</td>
-                <td>${item.nomorDana}</td>
-              </tr>
-            `;
-          });
-          
-          tableHtml += `
-              </tbody>
-            </table>
-          `;
-          
-          resultsTable.innerHTML = tableHtml;
-        } else {
-          resultsTable.innerHTML = '<div class="no-results">apa yang kau tempel boy?: "' + searchTerm + '"</div>';
-        }
-      }, 500);
-    }
-  </script>
-</body>
-</html>
+    // Data DANA yang telah disediakan
+    const danaData = [
+      { gDana: "G2475", namaDana: "SUDARSIH", nomorDana: "087889543411" },
+      { gDana: "G2476", namaDana: "HARYANTO", nomorDana: "087889543371" },
+      { gDana: "G2477", namaDana: "MUNIFATUL MUAROFAH", nomorDana: "087889543430" },
+      { gDana: "G2480", namaDana: "SANDIMIN", nomorDana: "087889545371" },
+      { gDana: "G2481", namaDana: "SUMANTRI", nomorDana: "087887601545" },
+      { gDana: "G2482", namaDana: "KASMUNI", nomorDana: "087887601182" },
+      { gDana: "G2493", namaDana: "KARSITI", nomorDana: "087887601531" },
+      { gDana: "G2501", namaDana: "RUMANAH", nomorDana: "087889544046" },
+      { gDana: "G2502", namaDana: "LA KUNDO EMANUEL", nomorDana: "087887601605" },
+      { gDana: "G2514", namaDana: "SULIKAH", nomorDana: "087889543723" },
+      { gDana: "G2520", namaDana: "SITI SOFIYAH", nomorDana: "087881373369" },
+      { gDana: "G2521", namaDana: "DULPA BERAHIMA", nomorDana: "087884832418" },
+      { gDana: "G2523", namaDana: "MATUL KHASANAH", nomorDana: "087881373352" },
+      { gDana: "G2524", namaDana: "CHAERUN NIKMAH", nomorDana: "087881373349" },
+      { gDana: "G2525", namaDana: "FITROTUL INAYAH", nomorDana: "087758000621" },
+      { gDana: "G2533", namaDana: "JARWANTO", nomorDana: "081939901347" },
+      { gDana: "G2539", namaDana: "KATI", nomorDana: "087881374921" },
+      { gDana: "G2540", namaDana: "MARMAN", nomorDana: "087889543735" },
+      { gDana: "G2541", namaDana: "SITI SOLIHAH", nomorDana: "087884832150" },
+      { gDana: "G2543", namaDana: "ROMELDA YATIM HILAKORE", nomorDana: "087884832410" },
+      { gDana: "G2544", namaDana: "OCTOVIANUS MODOK", nomorDana: "087887601596" },
+      { gDana: "G2546", namaDana: "HENDRI ARIADI", nomorDana: "085966760562" },
+      { gDana: "G2547", namaDana: "EUIS KARTIKASARI", nomorDana: "087758000484" },
+      { gDana: "G2551", namaDana: "ROHIMAH", nomorDana: "087852346341" },
+      { gDana: "G2553", namaDana: "PRIYO UTOMO", nomorDana: "085956667426" },
+      { gDana: "G2558", namaDana: "MURMINAH", nomorDana: "087758000482" },
+      { gDana: "G2560", namaDana: "SUNARYAH", nomorDana: "085956665123" },
+      { gDana: "G2561", namaDana: "DEDE NANI", nomorDana: "085945177782" },
+      { gDana: "G2566", namaDana: "SAMPEN", nomorDana: "087881375102" },
+      { gDana: "G2569", namaDana: "SUNARTI", nomorDana: "087889543766" },
+      { gDana: "G2570", namaDana: "SOLIKIN", nomorDana: "087889543691" },
+      { gDana: "G2571", namaDana: "LINDA UTAMI", nomorDana: "087889545890" },
+      { gDana: "G2572", namaDana: "SAGINO", nomorDana: "087889543688" },
+      { gDana: "G2573", namaDana: "MASROKAH", nomorDana: "087889543684" },
+      { gDana: "G2574", namaDana: "MUJIMAN", nomorDana: "087889545536" },
+      { gDana: "G2578", namaDana: "ISWANTO", nomorDana: "087884832121" },
+      { gDana: "G2579", namaDana: "ARIFIN", nomorDana: "087889545951" },
+      { gDana: "G2581", namaDana: "RIFATI", nomorDana: "087881373332" },
+      { gDana: "G2582", namaDana: "RUSTAM DULUNG", nomorDana: "087884832419" },
+      { gDana: "G2583", namaDana: "MUSTAMAH", nomorDana: "087889544596" },
+      { gDana: "G2584", namaDana: "SUSANA DWI LESTARI", nomorDana: "087881375051" },
+      { gDana: "G2586", namaDana: "JUMINAH", nomorDana: "087881374674" },
+      { gDana: "G2587", namaDana: "SUHADI", nomorDana: "087889545913" },
+      { gDana: "G2589", namaDana: "SURATMIN", nomorDana: "087887601703" },
+      { gDana: "G2593", namaDana: "ASIH", nomorDana: "087881375074" },
+      { gDana: "G2594", namaDana: "MARYATUN", nomorDana: "087881375083" },
+      { gDana: "G2597", namaDana: "SARU", nomorDana: "087881372852" },
+      { gDana: "G2598", namaDana: "ALLESIUS MARYANTO", nomorDana: "087889543687" },
+      { gDana: "G2599", namaDana: "KASIKEM", nomorDana: "087881372842" },
+      { gDana: "G2600", namaDana: "NASIKUN", nomorDana: "087887601581" },
+      { gDana: "G2602", namaDana: "SRI MUNAFIROH", nomorDana: "087881374890" },
+      { gDana: "G2604", namaDana: "SOLIKUL", nomorDana: "087889545945" },
+      { gDana: "G2606", namaDana: "SULISTIANINGSIH", nomorDana: "087887601582" },
+      { gDana: "G2607", namaDana: "SODIOI", nomorDana: "087889545041" },
+      { gDana: "G2608", namaDana: "RASMANI", nomorDana: "087881375111" },
+      { gDana: "G2610", namaDana: "SAWON PRIYO UTOMO", nomorDana: "087881375040" },
+      { gDana: "G2611", namaDana: "SAHIR", nomorDana: "087889543779" },
+      { gDana: "G2612", namaDana: "SUGIYONO", nomorDana: "087889543715" },
+      { gDana: "G2613", namaDana: "PAIMAN", nomorDana: "087889544805" },
+      { gDana: "G2614", namaDana: "BUDI SANTOSO", nomorDana: "087889543703" },
+      { gDana: "G2616", namaDana: "RINAH", nomorDana: "087758000523" },
+      { gDana: "G2623", namaDana: "WARDIA", nomorDana: "087875946965" },
+      { gDana: "G2625", namaDana: "TUKIRAHAYU", nomorDana: "087884832141" },
+      { gDana: "G2626", namaDana: "NGATIJAH LAKILAKI", nomorDana: "087889545823" },
+      { gDana: "G2627", namaDana: "SUHARYANTO", nomorDana: "087889545973" },
+      { gDana: "G2628", namaDana: "SUKAMSIYAH", nomorDana: "087884832140" },
+      { gDana: "G2630", namaDana: "MAKSUM", nomorDana: "087889545805" },
+      { gDana: "G2632", namaDana: "TASMI", nomorDana: "087889544802" },
+      { gDana: "G2638", namaDana: "SIROJATUL LAMANIYAH", nomorDana: "087889545832" },
+      { gDana: "G2639", namaDana: "MOH LICHUN", nomorDana: "087881373348" },
+      { gDana: "G2642", namaDana: "SANTI ILYAS", nomorDana: "087884832416" },
+      { gDana: "G2643", namaDana: "JUJUN POLINTE", nomorDana: "087884832417" },
+      { gDana: "G2644", namaDana: "MARYAM", nomorDana: "087875940106" },
+      { gDana: "G2651", namaDana: "CAHYADI", nomorDana: "087863601243" },
+      { gDana: "G2652", namaDana: "WAENAH", nomorDana: "087863601193" },
+      { gDana: "G2653", namaDana: "SOLIKIN", nomorDana: "087854292146" },
+      { gDana: "G2666", namaDana: "HADIYANTO", nomorDana: "087854293458" },
+      { gDana: "G2668", namaDana: "LIZLI ELIVIA", nomorDana: "087854293255" },
+      { gDana: "G2670", namaDana: "TUMINI", nomorDana: "087889546281" },
+      { gDana: "G2673", namaDana: "DAVID LENSEHANG", nomorDana: "087752456211" },
+      { gDana: "G2675", namaDana: "JURAINAH", nomorDana: "087788710348" },
+      { gDana: "G2691", namaDana: "PAERAN", nomorDana: "087752454391" },
+      { gDana: "G2694", namaDana: "HAMIDA", nomorDana: "085959310180" },
+      { gDana: "G2701", namaDana: "RIYANTO", nomorDana: "087752456431" },
+      { gDana: "G2710", namaDana: "SRI WANIN", nomorDana: "087752455141" },
+      { gDana: "G2711", namaDana: "MARIAM TUTER", nomorDana: "087752455281" },
+      { gDana: "G2738", namaDana: "MUH IDRIS", nomorDana: "087752455121" },
+      { gDana: "G2740", namaDana: "ROSNIDA", nomorDana: "087889546201" },
+      { gDana: "G2741", namaDana: "HASNAH", nomorDana: "087752454414" },
+      { gDana: "G2865", namaDana: "BEATRIX ELISABET DJAMRUDIA", nomorDana: "087752068202" },
+      { gDana: "G2866", namaDana: "MISMAN", nomorDana: "087752068195" },
+      { gDana: "G2867", namaDana: "DASMI", nomorDana: "087752068226" },
+      { gDana: "G2868", namaDana: "MAMIK ALIFATUN", nomorDana: "087752060362" },
+      { gDana: "G2870", namaDana: "MASUDI", nomorDana: "087889545908" },
+      { gDana: "G2871", namaDana: "CHOIRIYAH", nomorDana: "087887601838" },
+      { gDana: "G2872", namaDana: "PURWANTO", nomorDana: "087887601203" },
+      { gDana: "G2873", namaDana: "SUKARNI", nomorDana: "087846250105" },
+      { gDana: "G2874", namaDana: "SITI ASIYAH", nomorDana: "081936819407" },
+      { gDana: "G2875", namaDana: "SRI EKOWATI", nomorDana: "087881374520" },
+      { gDana: "G2876", namaDana: "SITI KUSRINI", nomorDana: "087855348506" },
+      { gDana: "G2877", namaDana: "SUGIANTO", nomorDana: "087850278418" },
+      { gDana: "G2878", namaDana: "WINARNA", nomorDana: "087881374663" },
+      { gDana: "G2879", namaDana: "WASJAN", nomorDana: "087881374734" },
+      { gDana: "G2880", namaDana: "AMRIH", nomorDana: "087889544301" },
+      { gDana: "G2881", namaDana: "PAINEM", nomorDana: "087752060608" },
+      { gDana: "G2882", namaDana: "KAHAR", nomorDana: "081936810043" },
+      { gDana: "G2883", namaDana: "AMALUDDIN", nomorDana: "087775852918" },
+      { gDana: "G2884", namaDana: "BAMBANG PURNOMO", nomorDana: "081936815313" },
+      { gDana: "G2885", namaDana: "SUKERI", nomorDana: "087863600657" },
+      { gDana: "G2886", namaDana: "KASMARYANI", nomorDana: "087863600655" },
+      { gDana: "G2888", namaDana: "KOMISAH", nomorDana: "087863600618" },
+      { gDana: "G2889", namaDana: "DASIROH", nomorDana: "087863600664" },
+      { gDana: "G2890", namaDana: "YOHANES KAMIDI", nomorDana: "087863600829" },
+      { gDana: "G2891", namaDana: "MIYAH", nomorDana: "085959179435" },
+      { gDana: "G2892", namaDana: "ISMAIL HARUN", nomorDana: "087847148941" },
+      { gDana: "G2893", namaDana: "ERNAWATI", nomorDana: "087863600436" },
+      { gDana: "G2894", namaDana: "SELA", nomorDana: "087863600418" },
+      { gDana: "G2896", namaDana: "KARTINI", nomorDana: "087770179669" },
+      { gDana: "G2897", namaDana: "MAHAMUDDIN", nomorDana: "087770179623" },
+      { gDana: "G2898", namaDana: "MOMI", nomorDana: "087752068175" },
+      { gDana: "G2899", namaDana: "ENI WIHARYANTI", nomorDana: "087863602744" },
+      { gDana: "G2900", namaDana: "HAJRAH", nomorDana: "085959178767" },
+      { gDana: "G2902", namaDana: "juhini", nomorDana: "087853368293" },
+      { gDana: "G2904", namaDana: "MONA MAULINA", nomorDana: "087853368300" },
+      { gDana: "G2906", namaDana: "SANDRAWATI", nomorDana: "087853368075" },
+      { gDana: "G2908", namaDana: "RANAH", nomorDana: "087853368176" },
+      { gDana: "G2910", namaDana: "PETRUS PAYONG", nomorDana: "087887544398" },
+      { gDana: "G2911", namaDana: "JOHANA LOE", nomorDana: "087887544391" },
+      { gDana: "G2912", namaDana: "NURJANNA", nomorDana: "085945840194" },
+      { gDana: "G2913", namaDana: "ENDRA SAHPUTRA", nomorDana: "085945840195" },
+      { gDana: "G2914", namaDana: "MARGARETA MAAF", nomorDana: "087853363497" },
+      { gDana: "G2915", namaDana: "BUKHORI", nomorDana: "087760582229" },
+      { gDana: "G2916", namaDana: "MISNATI", nomorDana: "087760582383" },
+      { gDana: "G2918", namaDana: "ERMELINDA IA BAY", nomorDana: "081932306707" },
+      { gDana: "G2919", namaDana: "GABRIEL KONO OEMATAN", nomorDana: "087788718100" },
+      { gDana: "G2920", namaDana: "ST ABODI", nomorDana: "087853362319" },
+      { gDana: "G2921", namaDana: "ROMLAH", nomorDana: "087760582177" },
+      { gDana: "G2922", namaDana: "MIDEN", nomorDana: "087760582178" },
+      { gDana: "G2924", namaDana: "PARIYEM", nomorDana: "085933200679" },
+      { gDana: "G2925", namaDana: "EMMO", nomorDana: "085945829824" },
+      { gDana: "G2926", namaDana: "BAINGAH", nomorDana: "087760582230" },
+      { gDana: "G2927", namaDana: "TAUFIK", nomorDana: "087726354157" },
+      { gDana: "G2928", namaDana: "MARIA DOLOROSA BANO", nomorDana: "087760581228" },
+      { gDana: "G2929", namaDana: "MELKIANUS TASAEL", nomorDana: "087760581233" },
+      { gDana: "G2930", namaDana: "WIKE DWI LESTARI", nomorDana: "087851842568" },
+      { gDana: "G2931", namaDana: "WINARTI", nomorDana: "087851840773" },
+      { gDana: "G2932", namaDana: "ROBIAH", nomorDana: "087851840770" },
+      { gDana: "G2933", namaDana: "SUWANDI", nomorDana: "087851840786" },
+      { gDana: "G2934", namaDana: "SALMIAH", nomorDana: "087760581211" },
+      { gDana: "G2935", namaDana: "RUMLAWATI", nomorDana: "087853362127" },
+      { gDana: "G2936", namaDana: "SYAFEI", nomorDana: "087760582050" },
+      { gDana: "G2937", namaDana: "ANIDA", nomorDana: "087853363384" },
+      { gDana: "G2938", namaDana: "MARIA MUWA WEA", nomorDana: "081973135605" },
+      { gDana: "G2939", namaDana: "MASKUROH", nomorDana: "087853363110" },
+      { gDana: "G2940", namaDana: "KHOIROTNI", nomorDana: "087853363115" },
+      { gDana: "G2941", namaDana: "NAZORI", nomorDana: "087853363118" },
+      { gDana: "G2943", namaDana: "ROTIAH", nomorDana: "087851840784" },
+      { gDana: "G2944", namaDana: "HJ.FATILAH", nomorDana: "087851840783" },
+      { gDana: "G2945", namaDana: "MARIA YANTIANA NEONBASU", nomorDana: "087853363588" },
+      { gDana: "G2946", namaDana: "NURKATI", nomorDana: "087853363125" },
+      { gDana: "G2947", namaDana: "MASTURA", nomorDana: "087853363137" },
+      { gDana: "G2952", namaDana: "RIFATUL HOIROH", nomorDana: "085970849377" },
+      { gDana: "G2954", namaDana: "PAIMIN", nomorDana: "087851840910" },
+      { gDana: "G2955", namaDana: "JAMINA", nomorDana: "087851840929" },
+      { gDana: "G2956", namaDana: "A SUKANDI", nomorDana: "087760582048" },
+      { gDana: "G2957", namaDana: "ZULPAN", nomorDana: "087760581996" },
+      { gDana: "G2958", namaDana: "ALOYSIUS GAGO", nomorDana: "081973135614" },
+      { gDana: "G2959", namaDana: "ALOYSIUS KLAU NAHAK", nomorDana: "087739216137" },
+      { gDana: "G2960", namaDana: "ENOS BANSOLE", nomorDana: "087760581386" },
+      { gDana: "G2961", namaDana: "KORNELIS MANENO", nomorDana: "087760582491" },
+      { gDana: "G2962", namaDana: "MIKHAEL MAU", nomorDana: "087760580771" },
+      { gDana: "G2963", namaDana: "DOMINIKUS KOLO", nomorDana: "087760582493" },
+      { gDana: "G2964", namaDana: "PAULUSKEWAKA LEBUAN", nomorDana: "087760582495" },
+      { gDana: "G2965", namaDana: "YOFILA KOFI", nomorDana: "087760581779" },
+      { gDana: "G2966", namaDana: "DAMARIS RADJA", nomorDana: "087760580775" },
+      { gDana: "G2967", namaDana: "YOHANIS MESSAKH", nomorDana: "087760580781" },
+      { gDana: "G2968", namaDana: "BLANDINA LURUK", nomorDana: "087760580769" },
+      { gDana: "G2969", namaDana: "ERNESTINA SALU", nomorDana: "087760581230" },
+      { gDana: "G2970", namaDana: "ELISABETH HEU", nomorDana: "087739216041" },
+      { gDana: "G2971", namaDana: "MARSALINA YOHANA SAEKOKO", nomorDana: "087739199164" },
+      { gDana: "G2972", namaDana: "MERRY OCTAVIANTE NALLE", nomorDana: "087788718082" },
+      { gDana: "G2973", namaDana: "NURHANAH", nomorDana: "087788719854" },
+      { gDana: "G2975", namaDana: "NAYA", nomorDana: "087853362323" },
+      { gDana: "G2976", namaDana: "HALIMA", nomorDana: "087853362313" },
+      { gDana: "G2977", namaDana: "LINAWATI", nomorDana: "087825068170" },
+      { gDana: "G2978", namaDana: "KARTINI", nomorDana: "087825068150" },
+      { gDana: "G2979", namaDana: "ERNESTINA BAREK HADA", nomorDana: "081973135517" },
+      { gDana: "G2980", namaDana: "FELIPUS PELLONDOU", nomorDana: "087760582125" },
+      { gDana: "G2981", namaDana: "AHMAD ARIF AFANDI", nomorDana: "087737475147" },
+      { gDana: "G2982", namaDana: "ELSIANA NDOLU", nomorDana: "087720921532" },
+      { gDana: "G2984", namaDana: "ELI YANA", nomorDana: "087737475289" },
+      { gDana: "G2985", namaDana: "RIKO RISANDI", nomorDana: "087720921516" },
+      { gDana: "G2986", namaDana: "SRI HASTUTI", nomorDana: "087853319298" },
+      { gDana: "G2987", namaDana: "MUHAMMAD RIKIYANTO HIDAYAT", nomorDana: "087853214269" },
+      { gDana: "G2997", namaDana: "WARIDI", nomorDana: "087737475108" },
+      { gDana: "G2998", namaDana: "SUNARSIH", nomorDana: "087737475111" },
+      { gDana: "G3108", namaDana: "FIDYA KUSUMANINGRUM", nomorDana: "087896118135" },
+      { gDana: "G3109", namaDana: "HARFAN RIFA I", nomorDana: "087896118306" },
+      { gDana: "G3110", namaDana: "MUHAMAD JALIL", nomorDana: "087896118308" },
+      { gDana: "G3111", namaDana: "JESSICHA JOSEPHINE M SORONGAN", nomorDana: "087896118146" },
+      { gDana: "G3112", namaDana: "FINA TAZKIYATUN NISA", nomorDana: "087896118134" },
+      { gDana: "G3113", namaDana: "FAKHRIANSYAH RIZKY WIJANARKO", nomorDana: "087896118305" },
+      { gDana: "G3114", namaDana: "ILYAS SETIAWAN", nomorDana: "087896118294" },
+      { gDana: "G3115", namaDana: "ASEP SUMINAR", nomorDana: "087746158896" },
+      { gDana: "G3116", namaDana: "FAIZ MUHAMMAD AL-FAATIH", nomorDana: "087746162871" },
+      { gDana: "G3117", namaDana: "CHOLIFAH", nomorDana: "081946094573" },
+      { gDana: "G3118", namaDana: "MARULLOH", nomorDana: "087896118201" },
+      { gDana: "G3119", namaDana: "M. SIGIT ICHSAN ERWANTO", nomorDana: "087896118208" },
+      { gDana: "G3120", namaDana: "IHSAN IZZATI FIKRI", nomorDana: "085937643223" },
+      { gDana: "G3121", namaDana: "EFRAN MAULANA ARDIANSHAH", nomorDana: "085937643236" },
+      { gDana: "G3122", namaDana: "MASTUR", nomorDana: "087896118185" },
+      { gDana: "G3123", namaDana: "RONALD MARSHAL FERDIAN", nomorDana: "085937643271" },
+      { gDana: "G3124", namaDana: "SEPTIAN PRADANA ARIYANTO", nomorDana: "085937643879" },
+      { gDana: "G3125", namaDana: "EKO AGUNG SEPTIYANTO", nomorDana: "085937643915" },
+      { gDana: "G3126", namaDana: "MAULANA DZUNNURRAN", nomorDana: "085937643951" },
+      { gDana: "G3127", namaDana: "RANGGA BAGAS SAPUTRA", nomorDana: "085937640658" },
+      { gDana: "G3128", namaDana: "IKHZAM YUSUF PRATAMA", nomorDana: "087860465021" },
+      { gDana: "G3129", namaDana: "SITI MASITOH", nomorDana: "081928432140" },
+      { gDana: "G3130", namaDana: "AUDIA DESTIVANI", nomorDana: "087884141286" },
+      { gDana: "G3131", namaDana: "SITI NURSEHA", nomorDana: "081928432117" },
+      { gDana: "G3132", namaDana: "SRI YULIANTI", nomorDana: "087848366181" },
+      { gDana: "G3133", namaDana: "SANDRA RATUNUSARI", nomorDana: "087884141282" },
+      { gDana: "G3134", namaDana: "RISA MIFTAHUL JANNAH", nomorDana: "081928432138" },
+      { gDana: "G3135", namaDana: "YULI YULIANTINI", nomorDana: "081928432147" },
+      { gDana: "G3136", namaDana: "NUR MAYASARI", nomorDana: "081928432124" },
+      { gDana: "G3137", namaDana: "RADIF KHAIRY", nomorDana: "081928432128" },
+      { gDana: "G3138", namaDana: "ADE HERMAWAN", nomorDana: "081928432135" },
+      { gDana: "G3139", namaDana: "AHMAD ABDUL HAMID", nomorDana: "081928432116" },
+      { gDana: "G3140", namaDana: "WANTINI", nomorDana: "087848366153" },
+      { gDana: "G3141", namaDana: "ANAS SUBANDI", nomorDana: "081928432136" },
+      { gDana: "G3142", namaDana: "TAUPIK MAULANA KUSUMAH", nomorDana: "087785390394" },
+      { gDana: "G3143", namaDana: "DEDE SAIFULLAH", nomorDana: "085937641764" },
+      { gDana: "G3144", namaDana: "ACHMAD ABDILLAH DWISYAPUTRA", nomorDana: "087843207162" },
+      { gDana: "G3145", namaDana: "RAHMAT TEGAK KUNUGRONO", nomorDana: "085937641765" },
+      { gDana: "G3146", namaDana: "FITRI JASMIN SAMARIA LUBIS", nomorDana: "087785148874" },
+      { gDana: "G3147", namaDana: "FADILAH PULUBUHU", nomorDana: "087789923872" },
+      { gDana: "G3148", namaDana: "FAZIKA WIDYANSAH", nomorDana: "087833535607" },
+      { gDana: "G3149", namaDana: "NAJMI ADIEL RAIHAN", nomorDana: "087746160706" },
+      { gDana: "G3150", namaDana: "RISKY PADILAH", nomorDana: "081946094592" },
+      { gDana: "G3151", namaDana: "FERY JUAN DAVID", nomorDana: "081946094586" },
+      { gDana: "G3152", namaDana: "MUHAMAD ALDIANSYAN", nomorDana: "081946094589" },
+      { gDana: "G3153", namaDana: "SAIFUL JAMIL", nomorDana: "087746158899" },
+      { gDana: "G3154", namaDana: "CHRISTY ANASTHASHIA CHRISTANTO", nomorDana: "081946094593" },
+      { gDana: "G3155", namaDana: "NOWO PRAWOTO", nomorDana: "081946094591" },
+      { gDana: "G3156", namaDana: "NUR HALIMA", nomorDana: "081946094783" },
+      { gDana: "G3157", namaDana: "YUDHISTA BIMBA SETIA", nomorDana: "087785149685" },
+      { gDana: "G3158", namaDana: "RAMADHAN FAIZSYAHPUTRA ARDAN", nomorDana: "085937640397" },
+      { gDana: "G3159", namaDana: "AGENG KURNIA ASHARRY", nomorDana: "085937640372" },
+      { gDana: "G3160", namaDana: "PRAMADITIO", nomorDana: "085937641572" },
+      { gDana: "G3161", namaDana: "RIFQI SANI PRADANA", nomorDana: "085937640409" },
+      { gDana: "G3162", namaDana: "MUHAMMAD FARHAN AFIF", nomorDana: "085937640384" },
+      { gDana: "G3163", namaDana: "ALVARO HALIM", nomorDana: "087789924135" },
+      { gDana: "G3164", namaDana: "FADILA AULIA NUR AZIZAH", nomorDana: "087882999022" },
+      { gDana: "G3165", namaDana: "NADIYAH", nomorDana: "087878532744" },
+      { gDana: "G3166", namaDana: "KARINA DWI UTARI", nomorDana: "087721363719" },
+      { gDana: "G3167", namaDana: "MOCH. SHOLIHIN", nomorDana: "087862779772" },
+      { gDana: "G3168", namaDana: "DIKA SUGIARDA", nomorDana: "087746160418" },
+      { gDana: "G3169", namaDana: "REGITA WILIA SEKARSIH", nomorDana: "087896118143" },
+      { gDana: "G3170", namaDana: "CUT ATHIRA SAUMA", nomorDana: "087896118132" },
+      { gDana: "G3171", namaDana: "AFIFAH FAKHRIYYAH FITRAH", nomorDana: "087896118141" },
+      { gDana: "G3172", namaDana: "SONNY WICAKSONO", nomorDana: "087896118292" },
+      { gDana: "G3173", namaDana: "TASYA APRILIA", nomorDana: "087896118136" },
+      { gDana: "G3174", namaDana: "NICO ROBI MANYU", nomorDana: "087896118276" },
+      { gDana: "G3175", namaDana: "MUHAMAD REFFA RENALDY", nomorDana: "087896118128" },
+      { gDana: "G3176", namaDana: "LINTANG PRABASWARA NAYOTTAMA", nomorDana: "087896118307" },
+      { gDana: "G3177", namaDana: "HASNA", nomorDana: "087896118166" },
+      { gDana: "G3178", namaDana: "NAUPAL HASAN", nomorDana: "087896118203" },
+      { gDana: "G3179", namaDana: "FADHIL WINATA", nomorDana: "087896118090" },
+      { gDana: "G3180", namaDana: "ARIS KRESNA ADYTIANTORO", nomorDana: "087885127795" },
+      { gDana: "G3181", namaDana: "ADI PRIYANTO", nomorDana: "087785390305" },
+      { gDana: "G3182", namaDana: "MOCHAMMAD IBRA AKBAR HARYAN", nomorDana: "081932263895" },
+      { gDana: "G3183", namaDana: "AGUNG RAHMAT SUCIYONO", nomorDana: "087843208320" },
+      { gDana: "G3184", namaDana: "DAVIN SHAPUTRA", nomorDana: "087874712798" },
+      { gDana: "G3185", namaDana: "FAHRUL ANAM", nomorDana: "087843206295" },
+      { gDana: "G3186", namaDana: "DIMAS ADJI LAKSMONO", nomorDana: "087862886048" },
+      { gDana: "G3187", namaDana: "RIZAL BAGUS PAMBUDI", nomorDana: "087878530950" },
+      { gDana: "G3188", namaDana: "MUHAMMAD CAHYA RAMADHAN", nomorDana: "087896118195" },
+      { gDana: "G3189", namaDana: "ZAKARIA RAMADHAN", nomorDana: "087896118213" },
+      { gDana: "G3190", namaDana: "FAJRUL FALAH", nomorDana: "081946095135" },
+      { gDana: "G3191", namaDana: "ARDI WIJAYA", nomorDana: "081946095155" },
+      { gDana: "G3192", namaDana: "JORDAN MARTIN", nomorDana: "081946094945" },
+      { gDana: "G3193", namaDana: "MUHAMMAD ALDI SETIAWAN", nomorDana: "087746158885" },
+      { gDana: "G3194", namaDana: "ADITYA SAEFULLOH", nomorDana: "087746161788" },
+      { gDana: "G3195", namaDana: "DIVA SYAHANDARA RAMADHANA", nomorDana: "087833534794" },
+      { gDana: "G3196", namaDana: "YUDI HARIANTO", nomorDana: "087746159400" },
+      { gDana: "G3197", namaDana: "ANDHIKA PRATAM", nomorDana: "081946095153" },
+      { gDana: "G3198", namaDana: "SATRIA DWI PRASETIYO", nomorDana: "081946094588" },
+      { gDana: "G3199", namaDana: "BINTANG ARYA PERMATA FIRDAUS", nomorDana: "087833535613" },
+      { gDana: "G3200", namaDana: "REZA DWI SAPUTRA", nomorDana: "081946094565" },
+      { gDana: "G3201", namaDana: "AJI PANGESTU", nomorDana: "087746158884" },
+      { gDana: "G3202", namaDana: "ANDANG RAMADHAN RIZKY PUTRA", nomorDana: "081946094590" },
+      { gDana: "G3203", namaDana: "MUHAMAD ISKANDAR", nomorDana: "081946094584" },
+      { gDana: "G3204", namaDana: "IRLAND JUNIOR MAKAROWO", nomorDana: "081946094587" },
+      { gDana: "G3205", namaDana: "RIYAN HARDIANSYAH", nomorDana: "087746158876" },
+      { gDana: "G3206", namaDana: "ABD. HAMID", nomorDana: "087833535614" },
+      { gDana: "G3207", namaDana: "SYARIFUDIN", nomorDana: "081946094557" },
+      { gDana: "G3208", namaDana: "SANGKALA BASO", nomorDana: "085975003921" },
+      { gDana: "G3209", namaDana: "RAINELDIS BULE ELU", nomorDana: "085975003228" },
+      { gDana: "G3210", namaDana: "YANI MONGGA", nomorDana: "085975003470" },
+      { gDana: "G3211", namaDana: "AMELIA", nomorDana: "085975003237" },
+      { gDana: "G3212", namaDana: "A ARWINI OKDWIANA", nomorDana: "085975003713" },
+      { gDana: "G3213", namaDana: "HAMZAH", nomorDana: "085975004549" },
+      { gDana: "G3214", namaDana: "EKAWATI", nomorDana: "085975002729" },
+      { gDana: "G3215", namaDana: "INDAH", nomorDana: "085974922212" },
+      { gDana: "G3216", namaDana: "RISKAWATI", nomorDana: "085975004325" },
+      { gDana: "G3217", namaDana: "DG HALIMAH", nomorDana: "085975004548" },
+      { gDana: "G3218", namaDana: "ALIMUN NAMORA ONDAK HARAHAP", nomorDana: "087746317788" },
+      { gDana: "G3219", namaDana: "TETAP GINTING", nomorDana: "087723644258" },
+      { gDana: "G3220", namaDana: "TERIMA BR SEMBIRING", nomorDana: "085946681304" },
+      { gDana: "G3221", namaDana: "TIOMA SIAGIAN", nomorDana: "085946681697" },
+      { gDana: "G3222", namaDana: "KOASA", nomorDana: "085943742999" },
+      { gDana: "G3223", namaDana: "MANTASIAH", nomorDana: "087884159681" },
+      { gDana: "G3224", namaDana: "SALASINA DG NGAI", nomorDana: "085975287567" },
+      { gDana: "G3225", namaDana: "HADIJAH", nomorDana: "085975001479" },
+      { gDana: "G3226", namaDana: "NURHAYATI", nomorDana: "081945086886" },
+      { gDana: "G3227", namaDana: "SELVI", nomorDana: "081945088403" },
+      { gDana: "G3228", namaDana: "RAHMAWATI", nomorDana: "087771493957" },
+      { gDana: "G3229", namaDana: "SRI WAHYUNI AZIS", nomorDana: "085933885451" },
+      { gDana: "G3230", namaDana: "NAJAMIA DG NURUNG", nomorDana: "085933885336" },
+      { gDana: "G3231", namaDana: "AMIN BENYAMIN", nomorDana: "085933885445" },
+      { gDana: "G3232", namaDana: "MAANI", nomorDana: "087774953535" },
+      { gDana: "G3233", namaDana: "SRI HANDAYANI", nomorDana: "085975001982" },
+      { gDana: "G3234", namaDana: "NURUL RISKY MAULIA R", nomorDana: "085975001986" },
+      { gDana: "G3235", namaDana: "MISNA", nomorDana: "087887251936" },
+      { gDana: "G3236", namaDana: "JUSNIATI", nomorDana: "085975002030" },
+      { gDana: "G3237", namaDana: "SIRAJUDDIN NASIR", nomorDana: "087852541551" },
+      { gDana: "G3238", namaDana: "RIZKI", nomorDana: "087843165450" },
+      { gDana: "G3239", namaDana: "DESY DAMAYANTI", nomorDana: "087783178042" },
+      { gDana: "G3240", namaDana: "SYAHRIL S.", nomorDana: "087849978877" },
+      { gDana: "G3241", namaDana: "WINARTI F KOYUM", nomorDana: "087730066031" },
+      { gDana: "G3242", namaDana: "MUH TAHIR", nomorDana: "087713361010" },
+      { gDana: "G3243", namaDana: "BUDIHAH", nomorDana: "087839904165" },
+      { gDana: "G3244", namaDana: "GUDFRIDUS OKTAFIANUS SERAN, S.H", nomorDana: "087839904160" },
+      { gDana: "G3245", namaDana: "PUTRI WAHYUNI", nomorDana: "087843163858" },
+      { gDana: "G3246", namaDana: "ILLA", nomorDana: "087870581052" },
+      { gDana: "G3247", namaDana: "KAMASIAH", nomorDana: "087864726905" },
+      { gDana: "G3248", namaDana: "AMIN", nomorDana: "085933885353" },
+      { gDana: "G3249", namaDana: "YUNITA", nomorDana: "085975002703" },
+      { gDana: "G3250", namaDana: "KAHARUDDIN", nomorDana: "085975002716" },
+      { gDana: "G3251", namaDana: "AZHAR DJAMAL", nomorDana: "085975002722" },
+      { gDana: "G3252", namaDana: "RINI S", nomorDana: "085975004328" },
+      { gDana: "G3253", namaDana: "HABIBA", nomorDana: "085975002003" },
+      { gDana: "G3254", namaDana: "DAHLAN", nomorDana: "085933885361" },
+      { gDana: "G3255", namaDana: "HJ ERNA HERNAWATI", nomorDana: "085933885351" },
+      { gDana: "G3256", namaDana: "TATI", nomorDana: "085933885352" },
+      { gDana: "G3257", namaDana: "ERNAWATI", nomorDana: "085975003965" },
+      { gDana: "G3258", namaDana: "Pair", nomorDana: "085975004320" },
+      { gDana: "G3259", namaDana: "Hasni", nomorDana: "087864726909" },
+      { gDana: "G3260", namaDana: "Abd Rahman K", nomorDana: "087864726908" },
+      { gDana: "G3261", namaDana: "Jusni", nomorDana: "087884159237" },
+      { gDana: "G3262", namaDana: "Eli Biarsan", nomorDana: "087864726892" },
+      { gDana: "G3263", namaDana: "Sudirman", nomorDana: "085975003266" },
+      { gDana: "G3264", namaDana: "Maria Marsela Ule", nomorDana: "087884159235" },
+      { gDana: "G3265", namaDana: "Summa B", nomorDana: "085975288241" },
+      { gDana: "G3266", namaDana: "UNI", nomorDana: "087864726760" },
+      { gDana: "G3267", namaDana: "NURHIDAYAT", nomorDana: "087884159211" },
+      { gDana: "G3268", namaDana: "TINI SRIWANTINI", nomorDana: "085975003167" },
+      { gDana: "G3269", namaDana: "HERI HEDI", nomorDana: "085975003462" },
+      { gDana: "G3270", namaDana: "HJ. NAHARIA.N", nomorDana: "087774953131" },
+      { gDana: "G3271", namaDana: "RAYNOL SIHOMBING", nomorDana: "085946681431" },
+      { gDana: "G3272", namaDana: "FATIELI GIAWA", nomorDana: "085946680953" },
+      { gDana: "G3273", namaDana: "IRWANSYAH", nomorDana: "085946680949" },
+      { gDana: "G3274", namaDana: "LINDA BR REGAR", nomorDana: "087741006773" },
+      { gDana: "G3275", namaDana: "SULLI SEBA", nomorDana: "087870819137" },
+      { gDana: "G3276", namaDana: "SALE PALI", nomorDana: "081945087439" },
+      { gDana: "G3277", namaDana: "SAYANI", nomorDana: "087870961457" },
+      { gDana: "G3278", namaDana: "ALVIANI IRA MALI", nomorDana: "087839904154" },
+      { gDana: "G3279", namaDana: "ERNA", nomorDana: "087839904518" },
+      { gDana: "G3280", namaDana: "NIAH", nomorDana: "085933885327" },
+      { gDana: "G3281", namaDana: "NUR ANITA S", nomorDana: "087887251920" },
+      { gDana: "G3282", namaDana: "OSAH NARIS HARYADI", nomorDana: "085933885354" },
+      { gDana: "G3283", namaDana: "HATIRANINGSI", nomorDana: "087838260841" },
+      { gDana: "G3284", namaDana: "ASMAWATI", nomorDana: "087783178079" },
+      { gDana: "G3285", namaDana: "NURINTANG", nomorDana: "087873152265" },
+      { gDana: "G3286", namaDana: "KLARA SEUK", nomorDana: "087839904158" },
+      { gDana: "G3287", namaDana: "LESTINA BR GINTING ,AMA PD", nomorDana: "081998450655" },
+      { gDana: "G3288", namaDana: "HAMIDAH.", nomorDana: "085975004543" },
+      { gDana: "G3289", namaDana: "DG SYAMSUDDIN", nomorDana: "087848652660" },
+      { gDana: "G3290", namaDana: "NUR FADILA S", nomorDana: "087783178082" },
+      { gDana: "G3291", namaDana: "FITRIANI", nomorDana: "087887251909" },
+      { gDana: "G3292", namaDana: "ANTONIA MO'I", nomorDana: "087883209573" },
+      { gDana: "G3293", namaDana: "SURIANI", nomorDana: "087883511932" },
+      { gDana: "G3294", namaDana: "MIDA DG PATI", nomorDana: "087874609029" },
+      { gDana: "G3295", namaDana: "PALASURI DG LINO", nomorDana: "087713361177" },
+      { gDana: "G3296", namaDana: "BAJI DG SIANG", nomorDana: "085975002762" },
+      { gDana: "G3297", namaDana: "HJ HASNAH", nomorDana: "085975002752" },
+      { gDana: "G3298", namaDana: "MATTU DG TOMPO", nomorDana: "085975004346" },
+      { gDana: "G3299", namaDana: "HERNINCE RIANTI", nomorDana: "087713361001" },
+      { gDana: "G3300", namaDana: "KAMARIA", nomorDana: "087884159824" },
+      { gDana: "G3301", namaDana: "HASMAH YUNUS", nomorDana: "087887251925" },
+      { gDana: "G3302", namaDana: "YANTI ANDRIANI SINAY", nomorDana: "085974924166" },
+      { gDana: "G3303", namaDana: "ZAENAL ARIFIN", nomorDana: "087713361188" },
+      { gDana: "G3304", namaDana: "SAIMAN", nomorDana: "087774953900" },
+      { gDana: "G3305", namaDana: "MARIANI DG TAYU", nomorDana: "087713360900" },
+      { gDana: "G3306", namaDana: "ABD AZIZ DG TAWANG", nomorDana: "087713360880" },
+      { gDana: "G3307", namaDana: "MANTANG", nomorDana: "087774953883" },
+      { gDana: "G3308", namaDana: "SITI HADIJAH", nomorDana: "085955003857" },
+      { gDana: "G3309", namaDana: "ASANI", nomorDana: "085943741349" },
+      { gDana: "G3310", namaDana: "AINUN", nomorDana: "085955002761" },
+      { gDana: "G3311", namaDana: "WAH", nomorDana: "087855778446" },
+      { gDana: "G3312", namaDana: "MUHAMMAD KARIM AL JABAR", nomorDana: "085955002408" },
+      { gDana: "G3313", namaDana: "AZIZAH", nomorDana: "085955002433" },
+      { gDana: "G3314", namaDana: "NOK", nomorDana: "085943742919" },
+      { gDana: "G3315", namaDana: "SUDIAR", nomorDana: "085955008116" },
+      { gDana: "G3316", namaDana: "ROMINUN", nomorDana: "085943741392" },
+      { gDana: "G3317", namaDana: "RINAWATI", nomorDana: "085958901888" },
+      { gDana: "G3318", namaDana: "JUARIAH", nomorDana: "085961106811" },
+      { gDana: "G3319", namaDana: "ACI DG LIMPO", nomorDana: "085943742496" },
+      { gDana: "G3320", namaDana: "SURATIN", nomorDana: "087873152043" },
+      { gDana: "G3321", namaDana: "SUWITO", nomorDana: "087873152966" },
+      { gDana: "G3322", namaDana: "BOIHAKI", nomorDana: "081914425710" },
+      { gDana: "G3323", namaDana: "SULIYAH", nomorDana: "087873151735" },
+      { gDana: "G3324", namaDana: "HALIMA", nomorDana: "087870819099" },
+      { gDana: "G3325", namaDana: "KRIS WIBOWO", nomorDana: "081914425699" },
+      { gDana: "G3326", namaDana: "YUSTRIANI", nomorDana: "085950600941" },
+      { gDana: "G3327", namaDana: "SUHARTATIK", nomorDana: "087873152963" },
+      { gDana: "G3328", namaDana: "WIDAYANTI", nomorDana: "087758033934" },
+      { gDana: "G3329", namaDana: "SURATMI", nomorDana: "087758033929" },
+      { gDana: "G3330", namaDana: "SUPINAH", nomorDana: "087758033910" },
+      { gDana: "G3331", namaDana: "IMELDA", nomorDana: "081998041129" },
+      { gDana: "G3332", namaDana: "WINDI AYU NINGSIH", nomorDana: "087758033964" },
+      { gDana: "G3333", namaDana: "KARYATI", nomorDana: "087758033956" },
+      { gDana: "G3334", namaDana: "MUHSIN DG NAI", nomorDana: "087758032723" },
+      { gDana: "G3335", namaDana: "FIRA FIRDIANTI", nomorDana: "08176570176" },
+      { gDana: "G3336", namaDana: "KALISOM", nomorDana: "085958904318" },
+      { gDana: "G3337", namaDana: "RADIAN SURYANI", nomorDana: "085958905278" },
+      { gDana: "G3338", namaDana: "MARIAH", nomorDana: "085943740482" },
+      { gDana: "G3339", namaDana: "KASMIYANI", nomorDana: "085955008079" },
+      { gDana: "G3340", namaDana: "HAZIZAH", nomorDana: "087870811437" },
+      { gDana: "G3341", namaDana: "EKA KURMAYATI", nomorDana: "085955006332" },
+      { gDana: "G3342", namaDana: "NIYA", nomorDana: "087767172252" },
+      { gDana: "G3343", namaDana: "ZELA SAPIRA", nomorDana: "085955008073" },
+      { gDana: "G3344", namaDana: "NUR RAHMI", nomorDana: "087758032549" },
+      { gDana: "G3345", namaDana: "WAHYUNI", nomorDana: "087758032548" },
+      { gDana: "G3346", namaDana: "PUJI RAHAYU", nomorDana: "087758033930" },
+      { gDana: "G3347", namaDana: "IMAM SOPINGI", nomorDana: "087758033888" },
+      { gDana: "G3348", namaDana: "MARYATI", nomorDana: "087758033883" },
+      { gDana: "G3349", namaDana: "YATMIATI", nomorDana: "085958938944" },
+      { gDana: "G3350", namaDana: "YAYU ANDRIANI", nomorDana: "08176570175" },
+      { gDana: "G3351", namaDana: "ZAINUDDIN DG TORO", nomorDana: "087758034057" },
+      { gDana: "G3352", namaDana: "SITI MARIAM", nomorDana: "087792205651" },
+      { gDana: "G3353", namaDana: "SUZANNA DG SIMBA", nomorDana: "087870819330" },
+      { gDana: "G3354", namaDana: "KAMINEM", nomorDana: "087758033885" },
+      { gDana: "G3355", namaDana: "RISTA RISTIANI AGUSTINA", nomorDana: "087758033945" },
+      { gDana: "G3356", namaDana: "MARYAM", nomorDana: "087758032553" },
+      { gDana: "G3357", namaDana: "MARWIYAH", nomorDana: "08176368985" },
+      { gDana: "G3358", namaDana: "DJUMADI", nomorDana: "087855778278" },
+      { gDana: "G3359", namaDana: "ISRAH DG LINO", nomorDana: "087718021190" },
+      { gDana: "G3360", namaDana: "SURIANI LULUANG", nomorDana: "081998047102" },
+      { gDana: "G3361", namaDana: "NUR KHAYATI", nomorDana: "081998041148" },
+      { gDana: "G3362", namaDana: "ROSI", nomorDana: "087855991149" },
+      { gDana: "G3363", namaDana: "ABDURI", nomorDana: "085943745605" },
+      { gDana: "G3364", namaDana: "NUR IHSAN M", nomorDana: "081998041141" },
+      { gDana: "G3365", namaDana: "NURLIA DG NGIMI", nomorDana: "087855778280" },
+      { gDana: "G3366", namaDana: "DIONISIUS AGUNG JEDARUT", nomorDana: "087855992127" },
+      { gDana: "G3367", namaDana: "MIRNA NUR AFNI", nomorDana: "085955008118" },
+      { gDana: "G3368", namaDana: "RINA FADIA", nomorDana: "085961108270" },
+      { gDana: "G3369", namaDana: "MUSINI", nomorDana: "087758033927" },
+      { gDana: "G3370", namaDana: "TI'AH", nomorDana: "08176369332" },
+      { gDana: "G3371", namaDana: "SITI ROSDIANA", nomorDana: "085945322826" },
+      { gDana: "G3372", namaDana: "SUGENG HARYONO", nomorDana: "087858245190" },
+      { gDana: "G3373", namaDana: "FITRI FAJRIAH", nomorDana: "08176369277" },
+      { gDana: "G3374", namaDana: "LISA", nomorDana: "085955003861" },
+      { gDana: "G3375", namaDana: "KARTINI", nomorDana: "08176369334" },
+      { gDana: "G3376", namaDana: "SURYANI", nomorDana: "08176369370" },
+      { gDana: "G3377", namaDana: "SURATMI", nomorDana: "08176369357" },
+      { gDana: "G3378", namaDana: "SANDI ANUGRAH", nomorDana: "087758034100" },
+      { gDana: "G3379", namaDana: "PANIKEM", nomorDana: "08176369276" },
+      { gDana: "G3380", namaDana: "NURJANNAH", nomorDana: "085958902234" },
+      { gDana: "G3381", namaDana: "HAJRAH", nomorDana: "087718021191" },
+      { gDana: "G3382", namaDana: "NABA", nomorDana: "085961106785" },
+      { gDana: "G3383", namaDana: "SUARTI", nomorDana: "087858247740" },
+      { gDana: "G3384", namaDana: "SOEPRIADI", nomorDana: "087858246230" },
+      { gDana: "G3385", namaDana: "SUKKU DG MALING", nomorDana: "085961106917" },
+      { gDana: "G3386", namaDana: "HERSON TONI", nomorDana: "087718021243" },
+      { gDana: "G3387", namaDana: "HAPSAH", nomorDana: "085958938049" },
+      { gDana: "G3388", namaDana: "JUHARI SINTA", nomorDana: "085943742928" },
+      { gDana: "G3389", namaDana: "AMIR", nomorDana: "087870819269" },
+      { gDana: "G3390", namaDana: "BUYANI", nomorDana: "085943743005" },
+      { gDana: "G3391", namaDana: "MASAH", nomorDana: "081998041092" },
+      { gDana: "G3392", namaDana: "SYAHRIL", nomorDana: "087758032536" },
+      { gDana: "G3393", namaDana: "ANITA", nomorDana: "085955008107" },
+      { gDana: "G3394", namaDana: "AMRIN", nomorDana: "085943740577" },
+      { gDana: "G3395", namaDana: "SRI FRADA CITA", nomorDana: "085955008178" },
+      { gDana: "G3396", namaDana: "MAIMUNAH", nomorDana: "085943741443" },
+      { gDana: "G3397", namaDana: "SITI KHAIRUNNISA", nomorDana: "087792205963" },
+      { gDana: "G3398", namaDana: "SAPURI", nomorDana: "087873151002" },
+      { gDana: "G3399", namaDana: "HAJIRAH", nomorDana: "085943742420" },
+      { gDana: "G3400", namaDana: "EHA", nomorDana: "087870816245" },
+      { gDana: "G3401", namaDana: "ROSMIATI", nomorDana: "087870961074" },
+      { gDana: "G3402", namaDana: "MARDIATUN", nomorDana: "087873152033" },
+      { gDana: "G3403", namaDana: "EEN HUNAENAH", nomorDana: "085958904362" },
+      { gDana: "G3404", namaDana: "ENI SURYANI", nomorDana: "087870818785" },
+      { gDana: "G3405", namaDana: "ITA JUWITA", nomorDana: "087870811415" },
+      { gDana: "G3406", namaDana: "JINNE DG SONA", nomorDana: "085979216831" },
+      { gDana: "G3407", namaDana: "WIWIN", nomorDana: "085955004093" },
+      { gDana: "G3408", namaDana: "SUWENTI", nomorDana: "087726440911" },
+      { gDana: "G3409", namaDana: "WIDJI", nomorDana: "085962471485" },
+      { gDana: "G3410", namaDana: "HASMAH DG NURUNG", nomorDana: "085955008362" },
+      { gDana: "G3411", namaDana: "SUTINAH", nomorDana: "085947266237" },
+      { gDana: "G3412", namaDana: "SAROKAH", nomorDana: "085926958635" },
+      { gDana: "G3413", namaDana: "WIWIK NURWAHYUNI", nomorDana: "085962471359" },
+      { gDana: "G3414", namaDana: "DORI DG BAU", nomorDana: "087870812883" },
+      { gDana: "G3415", namaDana: "JUMARIA DG PATI", nomorDana: "085955001747" },
+      { gDana: "G3416", namaDana: "INDAH AYU SETIORINI", nomorDana: "085962471543" },
+      { gDana: "G3417", namaDana: "PARTIN", nomorDana: "087758340846" },
+      { gDana: "G3418", namaDana: "NURBAYA", nomorDana: "081938798704" },
+      { gDana: "G3419", namaDana: "IMROATUS SOLEHAH", nomorDana: "081938798703" },
+      { gDana: "G3420", namaDana: "NINIS ANNISA'UL MASULA", nomorDana: "085947266387" },
+      { gDana: "G3421", namaDana: "LAMINAH", nomorDana: "085926957141" },
+      { gDana: "G3422", namaDana: "BINTI ASOMAH", nomorDana: "087720925884" },
+      { gDana: "G3423", namaDana: "SITI BAROKAH", nomorDana: "087838263868" },
+      { gDana: "G3424", namaDana: "ABD. KARIM", nomorDana: "081938798200" },
+      { gDana: "G3425", namaDana: "NANIK", nomorDana: "085962471528" },
+      { gDana: "G3426", namaDana: "KONYAR", nomorDana: "085947265929" },
+      { gDana: "G3427", namaDana: "DWI SETIOWATI", nomorDana: "087825740170" },
+      { gDana: "G3428", namaDana: "RISNA", nomorDana: "085947266906" },
+      { gDana: "G3429", namaDana: "ASSENG", nomorDana: "087743170147" },
+      { gDana: "G3430", namaDana: "SUGIARTI", nomorDana: "08176369296" },
+      { gDana: "G3431", namaDana: "SANTI", nomorDana: "085962471507" },
+      { gDana: "G3432", namaDana: "GUNAWAN", nomorDana: "085947267700" },
+      { gDana: "G3433", namaDana: "RANI AGUS PRIHATINI", nomorDana: "085962471546" },
+      { gDana: "G3434", namaDana: "SUMIATUN", nomorDana: "081938799017" },
+      { gDana: "G3435", namaDana: "MARHUMAH", nomorDana: "085962470474" },
+      { gDana: "G3436", namaDana: "DG RAMPU", nomorDana: "085962471357" },
+      { gDana: "G3437", namaDana: "IKAH M", nomorDana: "085962471818" },
+      { gDana: "G3438", namaDana: "MURSIDAH DG COWA", nomorDana: "085947267733" },
+      { gDana: "G3439", namaDana: "NAHARIAH", nomorDana: "087870811457" },
+      { gDana: "G3440", namaDana: "MARIYEM", nomorDana: "087825740184" },
+      { gDana: "G3441", namaDana: "DAHLIA DG NGASSENG", nomorDana: "087870818596" },
+      { gDana: "G3442", namaDana: "SULASTRI", nomorDana: "087743170138" },
+      { gDana: "G3443", namaDana: "SRI RAHAYU", nomorDana: "087758340197" },
+      { gDana: "G3444", namaDana: "RABASIA DG SOMPA", nomorDana: "085962471606" },
+      { gDana: "G3445", namaDana: "ELIS SETIYONINGSIH", nomorDana: "087726440589" },
+      { gDana: "G3446", namaDana: "DUDDIN DG KULLE", nomorDana: "085962471598" },
+      { gDana: "G3447", namaDana: "LUSIANI", nomorDana: "087758340907" },
+      { gDana: "G3449", namaDana: "ASRORI", nomorDana: "087778759081" },
+      { gDana: "G3450", namaDana: "MAT RAWI", nomorDana: "087870816352" },
+      { gDana: "G3451", namaDana: "MUNARSIH", nomorDana: "085955004556" },
+      { gDana: "G3452", namaDana: "SITIASIYAH", nomorDana: "085979214430" },
+      { gDana: "G3453", namaDana: "NUR HAISYAH", nomorDana: "087870961436" },
+      { gDana: "G3454", namaDana: "SLAMET", nomorDana: "087870816216" },
+      { gDana: "G3455", namaDana: "SITI NUR IHWATIN", nomorDana: "085955002754" },
+      { gDana: "G3456", namaDana: "SONI SUSANTO", nomorDana: "085979215789" },
+      { gDana: "G3457", namaDana: "SYAMSIAH", nomorDana: "087855990116" },
+      { gDana: "G3459", namaDana: "RAHMA NUR MALINDA KARYADINATA", nomorDana: "087751018195" },
+      { gDana: "G3460", namaDana: "FITRIAH NURYANTI", nomorDana: "087870811403" },
+      { gDana: "G3461", namaDana: "SYAMSUARNI", nomorDana: "085955004087" },
+      { gDana: "G3462", namaDana: "SYAMSINAR", nomorDana: "085955003883" },
+      { gDana: "G3463", namaDana: "KAMASIAH", nomorDana: "087870961712" },
+      { gDana: "G3464", namaDana: "RUSTAN MANDO", nomorDana: "081931231890" },
+      { gDana
