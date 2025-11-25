@@ -277,21 +277,21 @@
       background-color: rgba(0, 0, 0, 0.1);
     }
     
-    /* Pagination styling */
+    /* Pagination styling yang lebih kecil dan compact */
     .pagination-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 20px 0;
-      gap: 10px;
+      margin: 10px 0; /* Mengurangi margin dari 20px menjadi 10px */
+      gap: 5px; /* Mengurangi gap dari 10px menjadi 5px */
       flex-wrap: wrap;
     }
     
     .pagination-info {
       color: var(--light-cyan);
       font-family: 'Orbitron', sans-serif;
-      font-size: 14px;
-      margin-right: 15px;
+      font-size: 11px; /* Mengurangi font size dari 14px menjadi 11px */
+      margin-right: 8px; /* Mengurangi margin dari 15px menjadi 8px */
       text-shadow: var(--text-glow);
     }
     
@@ -299,15 +299,15 @@
       background: linear-gradient(135deg, rgba(0, 153, 217, 0.3), rgba(0, 212, 170, 0.3));
       border: 1px solid var(--light-cyan-transparent);
       color: var(--light-cyan);
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 4px 8px; /* Mengurangi padding dari 8px 12px menjadi 4px 8px */
+      border-radius: 6px; /* Mengurangi border radius dari 8px menjadi 6px */
       cursor: pointer;
       font-family: 'Orbitron', sans-serif;
       font-weight: 500;
-      font-size: 14px;
+      font-size: 11px; /* Mengurangi font size dari 14px menjadi 11px */
       transition: all 0.3s ease;
       text-shadow: var(--text-glow);
-      min-width: 40px;
+      min-width: 28px; /* Mengurangi min-width dari 40px menjadi 28px */
       text-align: center;
     }
     
@@ -316,7 +316,7 @@
       border-color: var(--light-cyan);
       box-shadow: var(--pulse-effect);
       color: white;
-      transform: translateY(-2px);
+      transform: translateY(-1px); /* Mengurangi transform dari -2px menjadi -1px */
     }
     
     .pagination-button.active {
@@ -438,19 +438,22 @@
         margin-top: 15px;
       }
       
+      /* Pagination yang lebih kecil di mobile */
       .pagination-container {
-        gap: 5px;
+        gap: 3px; /* Mengurangi gap dari 5px menjadi 3px */
+        margin: 8px 0; /* Mengurangi margin dari 10px menjadi 8px */
       }
       
       .pagination-button {
-        padding: 6px 10px;
-        font-size: 12px;
-        min-width: 35px;
+        padding: 3px 6px; /* Mengurangi padding dari 4px 8px menjadi 3px 6px */
+        font-size: 10px; /* Mengurangi font size dari 11px menjadi 10px */
+        min-width: 24px; /* Mengurangi min-width dari 28px menjadi 24px */
+        border-radius: 4px; /* Mengurangi border radius dari 6px menjadi 4px */
       }
       
       .pagination-info {
-        font-size: 12px;
-        margin-right: 10px;
+        font-size: 9px; /* Mengurangi font size dari 11px menjadi 9px */
+        margin-right: 6px; /* Mengurangi margin dari 8px menjadi 6px */
       }
     }
   </style>
@@ -636,7 +639,7 @@
       // Info halaman
       const info = document.createElement('div');
       info.className = 'pagination-info';
-      info.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+      info.textContent = `Hal ${currentPage}/${totalPages}`; /* Membuat info lebih compact */
       paginationContainer.appendChild(info);
       
       // Tombol Previous
@@ -666,7 +669,7 @@
         if (startPage > 2) {
           const dots = document.createElement('span');
           dots.className = 'pagination-button';
-          dots.textContent = '...';
+          dots.textContent = '..'; /* Mengurangi dari "..." menjadi ".." */
           dots.style.cursor = 'default';
           dots.style.border = 'none';
           dots.style.background = 'none';
@@ -691,7 +694,7 @@
         if (endPage < totalPages - 1) {
           const dots = document.createElement('span');
           dots.className = 'pagination-button';
-          dots.textContent = '...';
+          dots.textContent = '..'; /* Mengurangi dari "..." menjadi ".." */
           dots.style.cursor = 'default';
           dots.style.border = 'none';
           dots.style.background = 'none';
