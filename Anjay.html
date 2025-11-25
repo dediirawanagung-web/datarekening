@@ -13,7 +13,7 @@
       --text-bright-glow: 0 0 10px rgba(136, 255, 255, 1), 0 0 20px rgba(136, 255, 255, 0.8), 0 0 30px rgba(136, 255, 255, 0.6);
     }
     
-    /* Slow blinking animation only for background borders */
+    /* Animasi untuk border */
     @keyframes borderBlink {
       0%, 100% {
         border-color: var(--light-cyan-transparent);
@@ -25,20 +25,8 @@
       }
     }
     
-    /* Animasi untuk teks biru (cyan) blink lambat */
+    /* Animasi untuk teks header dan elemen non-data */
     @keyframes textBlink {
-      0%, 100% {
-        color: var(--light-cyan); /* Menggunakan warna cyan yang sama */
-        text-shadow: var(--text-glow); /* Efek cahaya cyan yang lebih ditingkatkan */
-      }
-      50% {
-        color: white;
-        text-shadow: var(--text-bright-glow); /* Efek cahaya yang lebih terang */
-      }
-    }
-    
-    /* Animasi teks berkedip lebih cepat untuk elemen interaktif */
-    @keyframes textBlinkFast {
       0%, 100% {
         color: var(--light-cyan);
         text-shadow: var(--text-glow);
@@ -49,7 +37,35 @@
       }
     }
     
-    /* Animasi teks muncul dengan efek fade-in */
+    /* ========================================================= */
+    /* === EFek KHUSUS UNTUK TEKS DATA (AWAL) ================== */
+    /* ========================================================= */
+    
+    /* Animasi pulse halus untuk teks data di dalam tabel */
+    @keyframes dataPulse {
+      0% {
+        text-shadow: 
+          0 0 4px rgba(136, 255, 255, 0.6),
+          0 0 8px rgba(136, 255, 255, 0.4);
+      }
+      50% {
+        text-shadow: 
+          0 0 8px rgba(136, 255, 255, 0.9),
+          0 0 14px rgba(136, 255, 255, 0.6),
+          0 0 18px rgba(0, 204, 255, 0.4);
+      }
+      100% {
+        text-shadow: 
+          0 0 4px rgba(136, 255, 255, 0.6),
+          0 0 8px rgba(136, 255, 255, 0.4);
+      }
+    }
+
+    /* ========================================================= */
+    /* === EFek KHUSUS UNTUK TEKS DATA (AKHIR) ================== */
+    /* ========================================================= */
+
+    /* Animasi fade in saat elemen muncul */
     @keyframes fadeInGlow {
       0% {
         opacity: 0;
@@ -62,14 +78,14 @@
     }
     
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font yang lebih modern */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       max-width: 650px;
       margin: 30px auto;
       padding: 18px;
       background: url('https://i.pinimg.com/736x/72/e5/27/72e527f948d31030e224d21f06a9b048.jpg') no-repeat center center fixed;
       background-size: cover;
       background-attachment: fixed;
-      color: var(--light-cyan); /* DIUBAH: Warna teks default menjadi cyan */
+      color: var(--light-cyan);
       font-size: 15px;
       min-height: 100vh;
     }
@@ -85,7 +101,6 @@
       z-index: -1;
     }
     
-    /* Container untuk judul dan pencarian */
     .header-container {
       background-color: rgba(0, 0, 0, 0.25);
       padding: 22px;
@@ -94,25 +109,24 @@
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       animation: borderBlink 3s infinite;
-      margin-bottom: 20px; /* Jarak ke konten di bawahnya */
+      margin-bottom: 20px;
       text-align: center;
     }
     
-    /* Header dengan blinking border dan teks cyan blink */
+    /* Judul dikembalikan ke animasi blink standar */
     h1 {
-      color: var(--light-cyan); /* Warna cyan yang sama */
+      color: var(--light-cyan);
       text-align: center;
-      font-size: 28px; /* Ukuran font diperbesar */
-      margin: 0 0 22px 0; /* Margin bawah untuk jarak dengan search box */
-      text-shadow: var(--text-glow); /* Efek cahaya yang lebih ditingkatkan */
-      animation: textBlink 3s infinite; /* Animasi lebih cepat */
-      font-weight: 600; /* Font weight lebih tebal */
-      letter-spacing: 1px; /* Jarak antar huruf */
+      font-size: 28px;
+      margin: 0 0 22px 0;
+      text-shadow: var(--text-glow);
+      animation: textBlink 3s infinite;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
     
-    /* Container untuk konten utama (tabel) - TRANSPARANSI DITINGKATKAN LAGI */
     .content-wrapper {
-      background-color: rgba(0, 0, 0, 0.15); /* Dari 0.25 menjadi 0.15 untuk jauh lebih transparan */
+      background-color: rgba(0, 0, 0, 0.15);
       padding: 22px;
       border-radius: 8px;
       border: 1px solid var(--light-cyan-transparent);
@@ -121,98 +135,104 @@
       animation: borderBlink 3s infinite;
     }
     
-    .search-container {
-      /* Margin bawah dihapus karena sudah diatur oleh container */
-    }
-    
     .search-box {
-      width: 85%; /* Mengurangi lebar menjadi 85% */
-      padding: 10px 15px; /* Padding sedikit diperbesar */
-      font-size: 16px; /* Ukuran font diperbesar */
+      width: 85%;
+      padding: 10px 15px;
+      font-size: 16px;
       border: 1px solid var(--light-cyan-transparent);
       border-radius: 25px;
       background-color: rgba(0, 0, 0, 0.3);
-      color: var(--light-cyan); /* DIUBAH: Warna teks di kotak pencarian menjadi cyan */
+      color: var(--light-cyan);
       transition: all 0.3s;
-      animation: textBlinkFast 2s infinite; /* Animasi lebih cepat untuk elemen interaktif */
       box-sizing: border-box;
       text-align: center;
-      margin: 0 auto; /* Menambahkan margin auto untuk menengahkan secara horizontal */
-      font-weight: 500; /* Font weight sedikit lebih tebal */
+      margin: 0 auto;
+      font-weight: 500;
+      text-shadow: var(--text-glow);
     }
 
     .search-box::placeholder {
       text-align: center;
-      color: var(--light-cyan); /* Placeholder dengan warna cyan */
-      opacity: 0.8; /* Opacity sedikit dikurangi */
+      color: var(--light-cyan);
+      opacity: 0.8;
     }
     
     .search-box:focus {
       outline: none;
       border-color: var(--light-cyan);
       box-shadow: var(--pulse-effect);
-      animation: none; /* Hentikan animasi saat fokus */
     }
     
-    /* Style untuk tabel - DIUBAH MENYESUAIKAN KONTAINER */
     table {
-      width: 100%; /* Lebar default, akan diubah oleh JavaScript */
+      width: 100%;
       border-collapse: collapse;
-      color: inherit; /* Akan mewarisi warna dari body (cyan) */
-      font-size: 15px; /* Ukuran font diperbesar */
+      color: inherit;
+      font-size: 15px;
       margin-bottom: 18px;
-      animation: fadeInGlow 1s ease-in-out; /* Animasi fade in saat muncul */
-    }
-    
-    th, td {
-      padding: 12px 15px;
-      text-align: center;
-      border: none; /* Garis dihapus */
-      background-color: transparent; /* Membuat sel transparan agar menampilkan warna tabel */
-      text-shadow: var(--text-glow); /* Efek cahaya pada semua teks tabel */
+      animation: fadeInGlow 1s ease-in-out;
     }
     
     th {
-      color: var(--light-cyan); /* Header dengan warna cyan */
-      font-size: 16px; /* Ukuran font header diperbesar */
-      font-weight: 600; /* Font weight lebih tebal */
-      letter-spacing: 0.5px; /* Jarak antar huruf */
+      padding: 12px 15px;
+      text-align: center;
+      border: none;
+      background-color: transparent;
+      color: var(--light-cyan);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-shadow: var(--text-bright-glow); /* Header tetap terang */
     }
     
-    /* Efek baris tetap dihapus untuk seragam */
+    /* PERUBAHAN: Style khusus untuk sel data (td) */
+    td {
+      padding: 12px 15px;
+      text-align: center;
+      border: none;
+      background-color: transparent;
+      /* Terapkan animasi pulse khusus untuk data */
+      animation: dataPulse 4s ease-in-out infinite;
+      transition: all 0.3s ease; /* Transisi halus untuk efek hover */
+    }
+
+    /* Efek hover saat kursor di atas baris data */
+    tr:hover td {
+      animation: none; /* Hentikan pulse saat hover */
+      color: white;
+      text-shadow: var(--text-bright-glow); /* Buat teks lebih terang */
+      transform: scale(1.05); /* Sedikit perbesar */
+    }
     
-    /* Pesan-pesan dan jam - DIUBAH MENJADI TRANSPARAN */
     .no-results, .error-message, .digital-datetime, .loading {
       text-align: center;
       color: var(--light-cyan);
       padding: 12px;
-      background-color: transparent; /* Latar dibuat transparan */
-      border-radius: 0; /* Sudut dibuat seragam dengan kontainer */
-      border: none; /* Garis tepi dihapus */
-      font-size: 15px; /* Ukuran font diperbesar */
-      animation: fadeInGlow 1s ease-in-out; /* Animasi fade in */
-      text-shadow: var(--text-glow); /* Efek cahaya */
+      background-color: transparent;
+      border-radius: 0;
+      border: none;
+      font-size: 15px;
+      animation: fadeInGlow 1s ease-in-out;
+      text-shadow: var(--text-glow);
     }
 
     .digital-datetime {
         font-family: 'Courier New', monospace;
-        font-size: 16px; /* Ukuran font diperbesar */
+        font-size: 16px;
         margin-top: 12px;
         letter-spacing: 1px;
-        font-weight: 500; /* Font weight sedikit lebih tebal */
+        font-weight: 500;
     }
 
     .loading {
         font-style: italic;
         opacity: 0.8;
-        border-bottom: 1px dashed var(--light-cyan-transparent); /* Garis bawah untuk penekanan */
-        animation: textBlinkFast 1.5s infinite; /* Animasi lebih cepat */
+        border-bottom: 1px dashed var(--light-cyan-transparent);
     }
 
     .error-message {
         font-weight: bold;
         margin-top: 18px;
-        animation: textBlinkFast 1s infinite; /* Animasi lebih cepat untuk pesan error */
+        animation: textBlink 1s infinite; /* Animasi cepat untuk error */
     }
 
   </style>
@@ -311,11 +331,9 @@
       
       // PERUBAHAN: Atur lebar tabel berdasarkan status pencarian
       if (searchTerm && searchTerm.trim() !== '') {
-        // Jika sedang ada pencarian, buat tabel lebih kecil dan di tengah
         table.style.width = '85%';
         table.style.margin = '0 auto';
       } else {
-        // Jika tidak ada pencarian (tampilan awal), buat tabel penuh
         table.style.width = '100%';
         table.style.margin = '0';
       }
@@ -369,7 +387,6 @@
         item.nomorDana.toLowerCase().includes(searchTerm)
       );
       
-      // PERUBAHAN: Kirim searchTerm ke displayData
       displayData(filteredData, searchTerm);
     }
     
