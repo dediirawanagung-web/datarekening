@@ -131,6 +131,24 @@
       overflow: hidden;
     }
     
+    /* Jam digital di pojok kiri atas */
+    .digital-datetime {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      letter-spacing: 1px;
+      font-weight: 500;
+      background: linear-gradient(90deg, rgba(0, 153, 217, 0.2), rgba(0, 212, 170, 0.2));
+      padding: 6px 10px;
+      border-radius: 15px;
+      display: inline-block;
+      animation: slowBlink 5s ease-in-out infinite;
+      z-index: 10;
+      border: 1px solid var(--light-cyan-transparent);
+    }
+    
     /* Logo DANA */
     .logo-container {
       display: flex;
@@ -341,7 +359,7 @@
       transform: none;
     }
     
-    .no-results, .error-message, .digital-datetime, .loading {
+    .no-results, .error-message, .loading {
       text-align: center;
       color: var(--light-cyan);
       padding: 12px;
@@ -353,19 +371,6 @@
       text-shadow: var(--text-glow);
       position: relative;
       z-index: 1;
-    }
-
-    .digital-datetime {
-        font-family: 'Orbitron', monospace;
-        font-size: 15px;
-        margin-top: 15px;
-        letter-spacing: 1px;
-        font-weight: 500;
-        background: linear-gradient(90deg, rgba(0, 153, 217, 0.2), rgba(0, 212, 170, 0.2));
-        padding: 8px;
-        border-radius: 20px;
-        display: inline-block;
-        animation: slowBlink 5s ease-in-out infinite;
     }
 
     .loading {
@@ -403,6 +408,13 @@
     @media (max-width: 768px) {
       body {
         padding: 10px;
+      }
+      
+      .digital-datetime {
+        font-size: 10px;
+        padding: 4px 8px;
+        top: 10px;
+        left: 10px;
       }
       
       h1 {
@@ -449,6 +461,9 @@
   <div class="main-container">
     <!-- Container untuk Judul dan Pencarian -->
     <div class="header-container">
+      <!-- Jam digital dipindahkan ke pojok kiri atas -->
+      <div id="digitalDatetime" class="digital-datetime"></div>
+      
       <div class="logo-container">
         <div class="logo">DANA</div>
       </div>
@@ -466,7 +481,6 @@
         <div id="resultsTable"></div>
         <div id="paginationContainer" class="pagination-container"></div>
         <div id="errorMessage" class="error-message"></div>
-        <div id="digitalDatetime" class="digital-datetime"></div>
       </div>
     </div>
     
