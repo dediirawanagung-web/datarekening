@@ -3,6 +3,8 @@
 <head>
   <base target="_top">
   <title>Data e-Wallet DANA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --light-cyan: #88ffff;
@@ -11,6 +13,9 @@
       --pulse-effect: 0 0 15px rgba(136, 255, 255, 0.8);
       --text-glow: 0 0 5px rgba(136, 255, 255, 0.8), 0 0 10px rgba(136, 255, 255, 0.6), 0 0 15px rgba(136, 255, 255, 0.4);
       --text-bright-glow: 0 0 10px rgba(136, 255, 255, 1), 0 0 20px rgba(136, 255, 255, 0.8), 0 0 30px rgba(136, 255, 255, 0.6);
+      --dark-blue: #0a192f;
+      --medium-blue: #172a45;
+      --accent-blue: #23a6d5;
     }
     
     /* Animasi untuk border */
@@ -37,9 +42,28 @@
       }
     }
     
-    /* ========================================================= */
-    /* === EFek KHUSUS UNTUK TEKS DATA (AWAL) ================== */
-    /* ========================================================= */
+    /* Animasi untuk background */
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    /* Animasi untuk card hover */
+    @keyframes cardFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
     
     /* Animasi pulse halus untuk teks data di dalam tabel */
     @keyframes dataPulse {
@@ -61,10 +85,6 @@
       }
     }
 
-    /* ========================================================= */
-    /* === EFek KHUSUS UNTUK TEKS DATA (AKHIR) ================== */
-    /* ========================================================= */
-
     /* Animasi fade in saat elemen muncul */
     @keyframes fadeInGlow {
       0% {
@@ -77,19 +97,35 @@
       }
     }
     
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 650px;
-      margin: 30px auto;
-      padding: 18px;
-      background: url('https://i.pinimg.com/736x/72/e5/27/72e527f948d31030e224d21f06a9b048.jpg') no-repeat center center fixed;
-      background-size: cover;
-      background-attachment: fixed;
-      color: var(--light-cyan);
-      font-size: 15px;
-      min-height: 100vh;
+    /* Animasi untuk loading dots */
+    @keyframes loadingDots {
+      0%, 20% {
+        content: '.';
+      }
+      40% {
+        content: '..';
+      }
+      60%, 100% {
+        content: '...';
+      }
     }
     
+    body {
+      font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--dark-blue), var(--medium-blue));
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: var(--light-cyan);
+      font-size: 16px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Efek partikel background */
     body::before {
       content: '';
       position: fixed;
@@ -97,62 +133,139 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(255, 255, 255, 0.05);
+      background: url('https://i.pinimg.com/736x/72/e5/27/72e527f948d31030e224d21f06a9b048.jpg') no-repeat center center fixed;
+      background-size: cover;
+      opacity: 0.15;
+      z-index: -2;
+    }
+    
+    /* Efek overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(10, 25, 47, 0.7) 100%);
       z-index: -1;
     }
     
+    /* Container utama */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: 20px;
+    }
+    
     .header-container {
-      background-color: rgba(0, 0, 0, 0.25);
-      padding: 22px;
-      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(23, 42, 69, 0.9), rgba(10, 25, 47, 0.9));
+      padding: 30px;
+      border-radius: 15px;
       border: 1px solid var(--light-cyan-transparent);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       animation: borderBlink 3s infinite;
-      margin-bottom: 20px;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
     }
     
-    /* Judul dikembalikan ke animasi blink standar */
+    /* Efek holografik pada header */
+    .header-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(136, 255, 255, 0.1) 50%,
+        transparent 70%
+      );
+      transform: rotate(45deg);
+      animation: holographic 3s infinite;
+    }
+    
+    @keyframes holographic {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+    
+    /* Logo DANA */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #0099d9, #00d4aa);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 0 20px rgba(0, 153, 217, 0.5);
+      animation: cardFloat 3s ease-in-out infinite;
+    }
+    
     h1 {
+      font-family: 'Orbitron', sans-serif;
       color: var(--light-cyan);
       text-align: center;
-      font-size: 28px;
-      margin: 0 0 22px 0;
+      font-size: 32px;
+      margin: 0 0 25px 0;
       text-shadow: var(--text-glow);
       animation: textBlink 3s infinite;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
     }
     
-    .content-wrapper {
-      background-color: rgba(0, 0, 0, 0.15);
-      padding: 22px;
-      border-radius: 8px;
-      border: 1px solid var(--light-cyan-transparent);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      animation: borderBlink 3s infinite;
+    .search-container {
+      position: relative;
+      margin-top: 20px;
     }
     
     .search-box {
-      width: 85%;
-      padding: 10px 15px;
-      font-size: 16px;
+      width: 100%;
+      padding: 15px 20px 15px 50px;
+      font-size: 18px;
       border: 1px solid var(--light-cyan-transparent);
-      border-radius: 25px;
+      border-radius: 30px;
       background-color: rgba(0, 0, 0, 0.3);
       color: var(--light-cyan);
       transition: all 0.3s;
       box-sizing: border-box;
-      text-align: center;
-      margin: 0 auto;
       font-weight: 500;
       text-shadow: var(--text-glow);
     }
+    
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--light-cyan);
+      font-size: 18px;
+    }
 
     .search-box::placeholder {
-      text-align: center;
       color: var(--light-cyan);
       opacity: 0.8;
     }
@@ -161,98 +274,213 @@
       outline: none;
       border-color: var(--light-cyan);
       box-shadow: var(--pulse-effect);
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .content-wrapper {
+      background: linear-gradient(135deg, rgba(23, 42, 69, 0.9), rgba(10, 25, 47, 0.9));
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid var(--light-cyan-transparent);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      animation: borderBlink 3s infinite;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Efek holografik pada content */
+    .content-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(136, 255, 255, 0.05) 50%,
+        transparent 70%
+      );
+      transform: rotate(45deg);
+      animation: holographic 4s infinite;
+    }
+    
+    /* Tabel dengan desain futuristik */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     
     table {
       width: 100%;
       border-collapse: collapse;
       color: inherit;
-      font-size: 15px;
-      margin-bottom: 18px;
+      font-size: 16px;
+      margin-bottom: 20px;
       animation: fadeInGlow 1s ease-in-out;
+      position: relative;
+      z-index: 1;
     }
     
     th {
-      padding: 12px 15px;
+      padding: 15px;
       text-align: center;
       border: none;
-      background-color: transparent;
-      color: var(--light-cyan);
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-shadow: var(--text-bright-glow); /* Header tetap terang */
+      background: linear-gradient(90deg, rgba(0, 153, 217, 0.3), rgba(0, 212, 170, 0.3));
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: var(--text-bright-glow);
+      position: relative;
     }
     
-    /* PERUBAHAN: Style khusus untuk sel data (td) */
+    th:first-child {
+      border-top-left-radius: 10px;
+    }
+    
+    th:last-child {
+      border-top-right-radius: 10px;
+    }
+    
     td {
-      padding: 12px 15px;
+      padding: 15px;
       text-align: center;
       border: none;
       background-color: transparent;
-      /* Terapkan animasi pulse khusus untuk data */
       animation: dataPulse 4s ease-in-out infinite;
-      transition: all 0.3s ease; /* Transisi halus untuk efek hover */
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
-
-    /* Efek hover saat kursor di atas baris data */
+    
+    tr:nth-child(even) td {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    
     tr:hover td {
-      animation: none; /* Hentikan pulse saat hover */
+      animation: none;
       color: white;
-      text-shadow: var(--text-bright-glow); /* Buat teks lebih terang */
-      transform: scale(1.05); /* Sedikit perbesar */
+      text-shadow: var(--text-bright-glow);
+      transform: scale(1.02);
+      background-color: rgba(0, 153, 217, 0.1);
     }
     
     .no-results, .error-message, .digital-datetime, .loading {
       text-align: center;
       color: var(--light-cyan);
-      padding: 12px;
+      padding: 15px;
       background-color: transparent;
       border-radius: 0;
       border: none;
-      font-size: 15px;
+      font-size: 16px;
       animation: fadeInGlow 1s ease-in-out;
       text-shadow: var(--text-glow);
+      position: relative;
+      z-index: 1;
     }
 
     .digital-datetime {
-        font-family: 'Courier New', monospace;
-        font-size: 16px;
-        margin-top: 12px;
+        font-family: 'Orbitron', monospace;
+        font-size: 18px;
+        margin-top: 20px;
         letter-spacing: 1px;
         font-weight: 500;
+        background: linear-gradient(90deg, rgba(0, 153, 217, 0.2), rgba(0, 212, 170, 0.2));
+        padding: 10px;
+        border-radius: 20px;
+        display: inline-block;
     }
 
     .loading {
         font-style: italic;
         opacity: 0.8;
         border-bottom: 1px dashed var(--light-cyan-transparent);
+        position: relative;
+    }
+    
+    .loading::after {
+      content: '.';
+      animation: loadingDots 1.5s infinite;
     }
 
     .error-message {
         font-weight: bold;
-        margin-top: 18px;
-        animation: textBlink 1s infinite; /* Animasi cepat untuk error */
+        margin-top: 20px;
+        animation: textBlink 1s infinite;
+        background-color: rgba(255, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 15px;
     }
-
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      color: var(--light-cyan);
+      font-size: 14px;
+      opacity: 0.7;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .header-container, .content-wrapper {
+        padding: 20px;
+      }
+      
+      th, td {
+        padding: 10px;
+        font-size: 14px;
+      }
+      
+      .search-box {
+        padding: 12px 15px 12px 40px;
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Container untuk Judul dan Pencarian -->
-  <div class="header-container">
-    <h1>E-Wallet Dana</h1>
-    <div class="search-container">
-      <input type="text" id="searchInput" class="search-box" placeholder="Cari apa boy">
+  <div class="main-container">
+    <!-- Container untuk Judul dan Pencarian -->
+    <div class="header-container">
+      <div class="logo-container">
+        <div class="logo">DANA</div>
+      </div>
+      <h1>E-Wallet Data</h1>
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="searchInput" class="search-box" placeholder="Cari data e-wallet">
+      </div>
     </div>
-  </div>
-  
-  <!-- Container untuk konten utama (tabel data) -->
-  <div class="content-wrapper">
-    <div class="results-container">
-      <div id="loading" class="loading">sabar la boy</div>
-      <div id="resultsTable"></div>
-      <div id="errorMessage" class="error-message"></div>
-      <div id="digitalDatetime" class="digital-datetime"></div>
+    
+    <!-- Container untuk konten utama (tabel data) -->
+    <div class="content-wrapper">
+      <div class="results-container">
+        <div id="loading" class="loading">Memuat data</div>
+        <div id="resultsTable"></div>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="digitalDatetime" class="digital-datetime"></div>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2023 E-Wallet Data Management System</p>
     </div>
   </div>
 
@@ -326,6 +554,10 @@
         return;
       }
       
+      // Buat container untuk tabel
+      const tableContainer = document.createElement('div');
+      tableContainer.className = 'table-container';
+      
       // Buat tabel
       const table = document.createElement('table');
       
@@ -369,7 +601,8 @@
         table.appendChild(row);
       });
       
-      resultsTable.appendChild(table);
+      tableContainer.appendChild(table);
+      resultsTable.appendChild(tableContainer);
     }
     
     // Fungsi untuk memfilter data berdasarkan input pencarian
