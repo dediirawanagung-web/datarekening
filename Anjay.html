@@ -149,6 +149,18 @@
       }
     }
     
+    /* Animasi untuk logo */
+    @keyframes logoGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(136, 255, 255, 0.5));
+        transform: scale(1);
+      }
+      50% {
+        filter: drop-shadow(0 0 15px rgba(136, 255, 255, 0.8));
+        transform: scale(1.05);
+      }
+    }
+    
     body {
       font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       /* Mengurangi max-width menjadi 600px untuk tampilan lebih compact */
@@ -262,6 +274,25 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
       position: relative;
       overflow: hidden;
+    }
+    
+    /* Logo container */
+    .logo-container {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .logo-container img {
+      max-width: 120px;
+      height: auto;
+      border-radius: 8px;
+      animation: logoGlow 4s infinite;
+      transition: all 0.3s ease;
+    }
+    
+    .logo-container img:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px rgba(136, 255, 255, 1));
     }
     
     h1 {
@@ -595,6 +626,10 @@
         font-size: 8px;
         margin-right: 4px;
       }
+      
+      .logo-container img {
+        max-width: 100px;
+      }
     }
   </style>
 </head>
@@ -608,6 +643,13 @@
   <div class="main-container">
     <!-- Container untuk Judul dan Pencarian -->
     <div class="header-container">
+      <!-- Logo di atas judul -->
+      <div class="logo-container">
+        <a href="https://link-tujuan-anda.com">
+          <img src="https://z-cdn-media.chatglm.cn/files/0a062bcc-08c1-4ed1-afb7-22b9a6432ac8_pasted_image_1764057755717.png?auth_key=1864057775-b678806876f1476c9f89671944356a33-0-f978b92596168fb0ba89daea33827326" alt="Line Togel Logo">
+        </a>
+      </div>
+      
       <h1>E-Wallet Data</h1>
       <div class="search-container">
         <i class="fas fa-search search-icon"></i>
