@@ -20,6 +20,10 @@
       --neon-blue: #00d4ff;
       --purple-glow: #7b2ff7;
       --pink-glow: #ff107f;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     }
     
     /* Animasi untuk border */
@@ -130,9 +134,11 @@
     @keyframes fadeIn {
       0% {
         opacity: 0;
+        transform: translateY(20px);
       }
       100% {
         opacity: 1;
+        transform: translateY(0);
       }
     }
     
@@ -149,12 +155,51 @@
       }
     }
     
+    /* Animasi untuk pulse effect */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    /* Animasi untuk slide in */
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Animasi untuk shake effect */
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+      }
+      20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+      }
+    }
+    
     body {
       font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      /* Mengurangi max-width menjadi 600px untuk tampilan lebih compact */
       max-width: 600px;
       margin: 0 auto;
-      /* Mengurangi padding */
       padding: 10px;
       /* Background yang sangat indah dengan multiple layers */
       background: 
@@ -168,7 +213,6 @@
       background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 400% 400%;
       animation: gradientShift 20s ease infinite;
       color: var(--light-cyan);
-      /* Mengurangi font size */
       font-size: 12px;
       min-height: 100vh;
       position: relative;
@@ -243,9 +287,7 @@
     .main-container {
       display: flex;
       flex-direction: column;
-      /* Mengurangi gap */
       gap: 15px;
-      /* Mengurangi margin-top */
       margin-top: 10px;
       position: relative;
       z-index: 1;
@@ -253,7 +295,6 @@
     
     .header-container {
       background: linear-gradient(135deg, rgba(23, 42, 69, 0.85), rgba(10, 25, 47, 0.85));
-      /* Mengurangi padding */
       padding: 15px;
       border-radius: 12px;
       border: 1px solid var(--light-cyan-transparent);
@@ -264,31 +305,58 @@
       overflow: hidden;
     }
     
+    /* Efek cahaya pada header */
+    .header-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(136, 255, 255, 0.1) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+      z-index: -1;
+    }
+    
     /* Logo container yang diperbarui */
     .logo-container {
-      /* Menghilangkan margin agar logo menyatu dengan header */
       margin: 0;
       text-align: center;
       padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+    }
+    
+    /* Efek cahaya di belakang logo */
+    .logo-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(136, 255, 255, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 3s ease-in-out infinite;
+      z-index: -1;
     }
     
     /* Perubahan: Menghapus border, border-radius, dan efek lain pada logo agar menyatu dengan tampilan */
     .logo-container img {
       max-width: 120px;
       height: auto;
-      /* Menghapus semua efek visual */
       border: none;
       border-radius: 0;
       box-shadow: none;
       filter: none;
-      /* Menghapus animasi dan transisi */
       animation: none;
       transition: none;
-      /* Menambahkan cursor default untuk menandakan tidak bisa diklik */
       cursor: default;
+      position: relative;
+      z-index: 1;
     }
     
     /* Menghapus efek hover pada logo */
@@ -303,9 +371,8 @@
       font-family: 'Orbitron', sans-serif;
       color: var(--light-cyan);
       text-align: center;
-      /* Mengurangi font size */
       font-size: 22px;
-      margin: 15px 0 15px 0; /* Menambahkan margin atas untuk jarak dengan logo */
+      margin: 15px 0 15px 0;
       text-shadow: var(--text-glow);
       animation: textBlink 4s infinite;
       font-weight: 700;
@@ -314,17 +381,27 @@
       z-index: 1;
     }
     
+    /* Efek garis bawah animasi pada judul */
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--light-cyan), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
     .search-container {
       position: relative;
-      /* Mengurangi margin-top */
       margin-top: 12px;
     }
     
     .search-box {
       width: 100%;
-      /* Mengurangi padding */
       padding: 10px 15px 10px 40px;
-      /* Mengurangi font size */
       font-size: 14px;
       border: 1px solid var(--light-cyan-transparent);
       border-radius: 25px;
@@ -338,13 +415,12 @@
     
     .search-icon {
       position: absolute;
-      /* Mengurangi left */
       left: 15px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--light-cyan);
-      /* Mengurangi font size */
       font-size: 14px;
+      transition: all 0.3s;
     }
 
     .search-box::placeholder {
@@ -359,9 +435,14 @@
       background-color: rgba(0, 0, 0, 0.5);
     }
     
+    /* Efek pada search icon saat input difokus */
+    .search-box:focus ~ .search-icon {
+      color: white;
+      transform: translateY(-50%) scale(1.2);
+    }
+    
     .content-wrapper {
       background: linear-gradient(135deg, rgba(23, 42, 69, 0.85), rgba(10, 25, 47, 0.85));
-      /* Mengurangi padding */
       padding: 15px;
       border-radius: 12px;
       border: 1px solid var(--light-cyan-transparent);
@@ -371,25 +452,47 @@
       overflow: hidden;
     }
     
+    /* Efek cahaya pada content wrapper */
+    .content-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(136, 255, 255, 0.05) 0%, transparent 70%);
+      animation: pulse 5s ease-in-out infinite;
+      z-index: -1;
+    }
+    
     /* Tabel dengan desain compact */
     .table-container {
       overflow-x: auto;
-      /* Mengurangi margin */
       margin: 10px 0;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      /* Mengurangi max-height */
       max-height: 350px;
       overflow-y: auto;
+      position: relative;
+    }
+    
+    /* Efek cahaya pada tabel */
+    .table-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--light-cyan), transparent);
+      animation: slideIn 2s ease-in-out infinite;
     }
     
     table {
       width: 100%;
       border-collapse: collapse;
       color: inherit;
-      /* Mengurangi font size */
       font-size: 12px;
-      /* Mengurangi margin-bottom */
       margin-bottom: 10px;
       animation: fadeIn 1s ease-in-out;
       position: relative;
@@ -397,14 +500,12 @@
     }
     
     th {
-      /* Mengurangi padding */
       padding: 10px;
       text-align: center;
       border: none;
       background: linear-gradient(90deg, rgba(0, 153, 217, 0.3), rgba(0, 212, 170, 0.3));
       color: white;
       font-family: 'Orbitron', sans-serif;
-      /* Mengurangi font size */
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.8px;
@@ -423,7 +524,6 @@
     }
     
     td {
-      /* Mengurangi padding */
       padding: 10px;
       text-align: center;
       border: none;
@@ -431,6 +531,14 @@
       animation: slowBlink 6s ease-in-out infinite;
       transition: all 0.3s ease;
       font-weight: 500;
+      position: relative;
+    }
+    
+    /* Efek hover pada baris tabel */
+    tr:hover td {
+      background-color: rgba(136, 255, 255, 0.1);
+      color: white;
+      transform: scale(1.02);
     }
     
     tr:nth-child(even) td {
@@ -442,9 +550,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Mengurangi margin */
       margin: 8px 0;
-      /* Mengurangi gap */
       gap: 3px;
       flex-wrap: wrap;
     }
@@ -452,9 +558,7 @@
     .pagination-info {
       color: var(--light-cyan);
       font-family: 'Orbitron', sans-serif;
-      /* Mengurangi font size */
       font-size: 10px;
-      /* Mengurangi margin */
       margin-right: 6px;
       text-shadow: var(--text-glow);
     }
@@ -463,19 +567,34 @@
       background: linear-gradient(135deg, rgba(0, 153, 217, 0.3), rgba(0, 212, 170, 0.3));
       border: 1px solid var(--light-cyan-transparent);
       color: var(--light-cyan);
-      /* Mengurangi padding */
       padding: 3px 6px;
       border-radius: 4px;
       cursor: pointer;
       font-family: 'Orbitron', sans-serif;
       font-weight: 500;
-      /* Mengurangi font size */
       font-size: 10px;
       transition: all 0.3s ease;
       text-shadow: var(--text-glow);
-      /* Mengurangi min-width */
       min-width: 22px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Efek cahaya pada tombol pagination */
+    .pagination-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .pagination-button:hover::before {
+      left: 100%;
     }
     
     .pagination-button:hover {
@@ -511,12 +630,10 @@
     .no-results, .error-message, .loading {
       text-align: center;
       color: var(--light-cyan);
-      /* Mengurangi padding */
       padding: 10px;
       background-color: transparent;
       border-radius: 0;
       border: none;
-      /* Mengurangi font size */
       font-size: 12px;
       animation: fadeIn 1s ease-in-out;
       text-shadow: var(--text-glow);
@@ -527,13 +644,11 @@
     /* Jam digital yang compact */
     .digital-datetime {
         font-family: 'Orbitron', monospace;
-        /* Mengurangi font size */
         font-size: 12px;
         margin-top: 15px;
         letter-spacing: 0.8px;
         font-weight: 500;
         background: linear-gradient(90deg, rgba(0, 153, 217, 0.2), rgba(0, 212, 170, 0.2));
-        /* Mengurangi padding */
         padding: 6px 12px;
         border-radius: 15px;
         display: inline-block;
@@ -541,6 +656,20 @@
         text-align: center;
         border: 1px solid var(--light-cyan-transparent);
         box-shadow: 0 0 10px rgba(136, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Efek cahaya pada jam digital */
+    .digital-datetime::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: slideIn 3s ease-in-out infinite;
     }
 
     .loading {
@@ -558,24 +687,38 @@
     .error-message {
         font-weight: bold;
         margin-top: 12px;
-        animation: textBlink 2s infinite;
+        animation: shake 2s ease-in-out infinite;
         background-color: rgba(255, 0, 0, 0.1);
         border-radius: 8px;
-        /* Mengurangi padding */
         padding: 10px;
     }
     
     /* Footer yang compact */
     .footer {
       text-align: center;
-      /* Mengurangi margin-top */
       margin-top: 15px;
-      /* Mengurangi padding */
       padding: 12px;
       color: var(--light-cyan);
-      /* Mengurangi font size */
       font-size: 10px;
       opacity: 0.7;
+      position: relative;
+    }
+    
+    /* Efek garis atas pada footer */
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--light-cyan-transparent), transparent);
+    }
+    
+    /* Efek hover pada footer */
+    .footer:hover {
+      opacity: 1;
     }
     
     /* Responsive design */
@@ -635,6 +778,90 @@
         max-width: 100px;
       }
     }
+    
+    /* Efek khusus untuk data kosong */
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: var(--light-cyan);
+      opacity: 0.7;
+    }
+    
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+    
+    /* Efek untuk highlight hasil pencarian */
+    .highlight {
+      background-color: rgba(255, 255, 0, 0.2);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    
+    /* Efek untuk notifikasi */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, rgba(23, 42, 69, 0.9), rgba(10, 25, 47, 0.9));
+      border: 1px solid var(--light-cyan-transparent);
+      border-radius: 8px;
+      box-shadow: var(--glow-effect);
+      color: var(--light-cyan);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px;
+      z-index: 1000;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    /* Efek untuk tombol refresh */
+    .refresh-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, rgba(0, 153, 217, 0.3), rgba(0, 212, 170, 0.3));
+      border: 1px solid var(--light-cyan-transparent);
+      color: var(--light-cyan);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+    
+    .refresh-button:hover {
+      background: linear-gradient(135deg, rgba(0, 153, 217, 0.5), rgba(0, 212, 170, 0.5));
+      border-color: var(--light-cyan);
+      box-shadow: var(--pulse-effect);
+      color: white;
+      transform: rotate(180deg);
+    }
+    
+    /* Efek untuk tombol refresh yang sedang berputar */
+    .refresh-button.spinning {
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
@@ -643,6 +870,9 @@
   
   <!-- Gelembung animasi -->
   <div class="bubbles" id="bubbles"></div>
+  
+  <!-- Notifikasi -->
+  <div id="notification" class="notification"></div>
   
   <div class="main-container">
     <!-- Container untuk Judul dan Pencarian -->
@@ -662,6 +892,11 @@
     
     <!-- Container untuk konten utama (tabel data) -->
     <div class="content-wrapper">
+      <!-- Tombol refresh -->
+      <div class="refresh-button" id="refreshButton" title="Refresh Data">
+        <i class="fas fa-sync-alt"></i>
+      </div>
+      
       <div class="results-container">
         <div id="loading" class="loading">Memuat data</div>
         <div id="resultsTable"></div>
@@ -695,6 +930,17 @@
     let currentPage = 1;
     const rowsPerPage = 10; // Jumlah data per halaman
     let searchTimeout;
+    
+    // Fungsi untuk menampilkan notifikasi
+    function showNotification(message, duration = 3000) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, duration);
+    }
     
     // Fungsi untuk membuat partikel animasi
     function createParticles() {
@@ -757,8 +1003,18 @@
     }
     
     // Fungsi untuk mengambil data dari Google Sheets
-    async function fetchDanaData() {
+    async function fetchDanaData(showLoading = true) {
       try {
+        if (showLoading) {
+          document.getElementById('loading').style.display = 'block';
+          document.getElementById('resultsTable').innerHTML = '';
+          document.getElementById('paginationContainer').innerHTML = '';
+          document.getElementById('errorMessage').textContent = '';
+          
+          // Tambahkan animasi spinning pada tombol refresh
+          document.getElementById('refreshButton').classList.add('spinning');
+        }
+        
         const response = await fetch(GOOGLE_SHEETS_URL);
         if (!response.ok) {
           throw new Error('Gagal mengambil data dari Google Sheets');
@@ -796,10 +1052,24 @@
         // Sembunyikan loading
         document.getElementById('loading').style.display = 'none';
         
+        // Hapus animasi spinning pada tombol refresh
+        document.getElementById('refreshButton').classList.remove('spinning');
+        
+        // Tampilkan notifikasi sukses
+        if (showLoading) {
+          showNotification('Data berhasil dimuat!');
+        }
+        
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('errorMessage').textContent = 'Error: ' + error.message;
         document.getElementById('loading').style.display = 'none';
+        
+        // Hapus animasi spinning pada tombol refresh
+        document.getElementById('refreshButton').classList.remove('spinning');
+        
+        // Tampilkan notifikasi error
+        showNotification('Gagal memuat data: ' + error.message, 5000);
       }
     }
     
@@ -815,7 +1085,14 @@
       paginationContainer.innerHTML = '';
       
       if (filteredData.length === 0) {
-        errorMessage.textContent = 'Apa yang kau tempel boy?';
+        // Tampilkan pesan kosong dengan ikon
+        const emptyState = document.createElement('div');
+        emptyState.className = 'empty-state';
+        emptyState.innerHTML = `
+          <i class="fas fa-search"></i>
+          <p>Tidak ada data yang ditemukan</p>
+        `;
+        resultsTable.appendChild(emptyState);
         return;
       }
       
@@ -854,20 +1131,41 @@
       
       table.appendChild(headerRow);
       
+      // Dapatkan kata kunci pencarian untuk highlight
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      
       // Tambahkan data untuk halaman ini
       pageData.forEach(item => {
         const row = document.createElement('tr');
         
         const gDanaCell = document.createElement('td');
-        gDanaCell.textContent = item.gDana;
+        // Highlight teks yang cocok dengan pencarian
+        if (searchTerm && item.gDana.toLowerCase().includes(searchTerm)) {
+          const regex = new RegExp(`(${searchTerm})`, 'gi');
+          gDanaCell.innerHTML = item.gDana.replace(regex, '<span class="highlight">$1</span>');
+        } else {
+          gDanaCell.textContent = item.gDana;
+        }
         row.appendChild(gDanaCell);
         
         const namaCell = document.createElement('td');
-        namaCell.textContent = item.namaDana;
+        // Highlight teks yang cocok dengan pencarian
+        if (searchTerm && item.namaDana.toLowerCase().includes(searchTerm)) {
+          const regex = new RegExp(`(${searchTerm})`, 'gi');
+          namaCell.innerHTML = item.namaDana.replace(regex, '<span class="highlight">$1</span>');
+        } else {
+          namaCell.textContent = item.namaDana;
+        }
         row.appendChild(namaCell);
         
         const nomorCell = document.createElement('td');
-        nomorCell.textContent = item.nomorDana;
+        // Highlight teks yang cocok dengan pencarian
+        if (searchTerm && item.nomorDana.toLowerCase().includes(searchTerm)) {
+          const regex = new RegExp(`(${searchTerm})`, 'gi');
+          nomorCell.innerHTML = item.nomorDana.replace(regex, '<span class="highlight">$1</span>');
+        } else {
+          nomorCell.textContent = item.nomorDana;
+        }
         row.appendChild(nomorCell);
         
         table.appendChild(row);
@@ -986,6 +1284,13 @@
         
         // Reset ke halaman 1 dan tampilkan hasil
         displayData(1);
+        
+        // Tampilkan notifikasi pencarian
+        if (searchTerm) {
+          showNotification(`Menampilkan ${filteredData.length} hasil untuk "${searchTerm}"`);
+        } else {
+          showNotification(`Menampilkan ${filteredData.length} data`);
+        }
       }, 300); // Delay 300ms untuk mengurangi frekuensi pencarian
     }
     
@@ -1027,7 +1332,19 @@
         
         // Reset ke halaman 1 dan tampilkan hasil
         displayData(1);
+        
+        // Tampilkan notifikasi pencarian
+        if (searchTerm) {
+          showNotification(`Menampilkan ${filteredData.length} hasil untuk "${searchTerm}"`);
+        } else {
+          showNotification(`Menampilkan ${filteredData.length} data`);
+        }
       }
+    });
+    
+    // Event listener untuk tombol refresh
+    document.getElementById('refreshButton').addEventListener('click', function() {
+      fetchDanaData(true);
     });
     
     // Panggil fungsi untuk membuat efek saat halaman dimuat
