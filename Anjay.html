@@ -275,23 +275,26 @@
       align-items: center;
     }
     
-    /* Menghapus animasi logo dan efek hover */
+    /* Perubahan: Menghapus border, border-radius, dan efek lain pada logo agar menyatu dengan tampilan */
     .logo-container img {
       max-width: 120px;
       height: auto;
-      border-radius: 8px;
-      /* Menghapus animasi logoGlow */
+      /* Menghapus semua efek visual */
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      filter: none;
+      /* Menghapus animasi dan transisi */
       animation: none;
-      /* Menghapus transisi untuk efek hover */
       transition: none;
-      /* Menambahkan border agar menyatu dengan desain */
-      border: 1px solid var(--light-cyan-transparent);
     }
     
     /* Menghapus efek hover pada logo */
     .logo-container img:hover {
       transform: none;
       filter: none;
+      border: none;
+      box-shadow: none;
     }
     
     h1 {
