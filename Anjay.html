@@ -176,7 +176,7 @@
       overflow: hidden;
     }
     
-    /* Logo container */
+    /* Logo container yang diperbarui */
     .logo-container {
       margin: 0;
       text-align: center;
@@ -185,10 +185,12 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      height: 120px; /* Tinggi yang konsisten untuk logo */
     }
     
     .logo-container img {
       max-width: 120px;
+      max-height: 100px; /* Batas tinggi untuk menjaga proporsi */
       height: auto;
       border: none;
       border-radius: 0;
@@ -199,6 +201,17 @@
       cursor: default;
       position: relative;
       z-index: 1;
+      object-fit: contain; /* Memastikan logo ditampilkan dengan proporsi yang benar */
+    }
+    
+    /* Fallback jika logo tidak dapat dimuat */
+    .logo-fallback {
+      display: none;
+      color: var(--light-cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      text-shadow: var(--text-glow);
     }
     
     h1 {
@@ -522,8 +535,13 @@
         margin-right: 4px;
       }
       
+      .logo-container {
+        height: 100px;
+      }
+      
       .logo-container img {
         max-width: 100px;
+        max-height: 80px;
       }
     }
     
@@ -583,7 +601,10 @@
     <div class="header-container">
       <!-- Logo di atas judul -->
       <div class="logo-container">
-        <img src="https://z-cdn-media.chatglm.cn/files/0a062bcc-08c1-4ed1-afb7-22b9a6432ac8_pasted_image_1764057755717.png?auth_key=1864057775-b678806876f1476c9f89671944356a33-0-f978b92596168fb0ba89daea33827326" alt="Line Togel Logo">
+        <img src="https://z-cdn-media.chatglm.cn/files/0a062bcc-08c1-4ed1-afb7-22b9a6432ac8_pasted_image_1764057755717.png?auth_key=1864057775-b678806876f1476c9f89671944356a33-0-f978b92596168fb0ba89daea33827326" 
+             alt="Line Togel Logo" 
+             onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';">
+        <div id="logoFallback" class="logo-fallback">DANA</div>
       </div>
       
       <h1>E-Wallet Dana Line</h1>
